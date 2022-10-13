@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting\Deployment;
 
@@ -16,7 +15,7 @@ final class TaskRunners
 	 */
 	public function __construct (
 		iterable $postBuildTasks,
-		iterable $postDeploymentTasks
+		iterable $postDeploymentTasks,
 	)
 	{
 		$this->postBuildTasks = $postBuildTasks;
