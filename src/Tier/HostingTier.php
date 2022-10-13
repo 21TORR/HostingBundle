@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting\Tier;
 
@@ -21,7 +20,7 @@ final class HostingTier
 			throw new InvalidCurrentHostingTierException(\sprintf(
 				"Invalid hosting tier: '%s'. Only allowed values are: %s",
 				$currentTier,
-				\implode(", ", self::getAllowedTiers())
+				\implode(", ", self::getAllowedTiers()),
 			));
 		}
 

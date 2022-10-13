@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting\Git;
 
@@ -19,7 +18,7 @@ final class LocalGitVersionFetcher
 	 */
 	public function __construct (
 		LoggerInterface $logger,
-		string $projectDir
+		string $projectDir,
 	)
 	{
 		$this->logger = $logger;

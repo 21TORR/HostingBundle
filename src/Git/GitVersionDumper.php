@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting\Git;
 
@@ -18,7 +17,7 @@ final class GitVersionDumper
 	public function __construct (
 		Filesystem $filesystem,
 		LoggerInterface $logger,
-		string $projectDir
+		string $projectDir,
 	)
 	{
 		$this->filesystem = $filesystem;

@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting\Git;
 
@@ -22,7 +21,7 @@ final class GitVersion
 		CacheInterface $cache,
 		GitVersionDumper $versionDumper,
 		LocalGitVersionFetcher $localGitVersionFetcher,
-		bool $isDebug
+		bool $isDebug,
 	)
 	{
 		$this->cache = $cache;

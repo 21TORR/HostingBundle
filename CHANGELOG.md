@@ -1,3 +1,10 @@
+1.1.4
+=====
+
+* (improvement) Replace all symfony polyfills and require the native packages in Composer instead.
+* (improvement) Require PHP 8.1+ and Symfony 6.1+
+
+
 1.1.3
 =====
 

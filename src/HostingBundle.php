@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Torr\Hosting;
 
@@ -26,7 +25,7 @@ final class HostingBundle extends Bundle
 			{
 				$container->getDefinition(HostingTier::class)
 					->setArgument('$currentTier', $config["tier"]);
-			}
+			},
 		);
 	}
 
