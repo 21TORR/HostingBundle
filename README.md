@@ -17,8 +17,8 @@ Then create the config in `config/packages/hosting.yaml`:
 ```yaml
 hosting:
     # add a unique identifier of your project installation here
-    installation: 'ohai' 
-    hosting_tier: '%env(HOSTING_TIER)%'
+    installation: 'ohai'
+    tier: '%env(HOSTING_TIER)%'
 ```
 
 Then install the package:
