@@ -1,3 +1,9 @@
+2.0.3
+=====
+
+* (enhancement) Add missing getter.
+
+
 2.0.2
 =====
 
