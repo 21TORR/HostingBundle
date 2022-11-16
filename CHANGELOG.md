@@ -1,3 +1,10 @@
+2.0.0
+=====
+
+* (bc) Git data was removed.
+* (feature) Add `BuildInfo`.
+
+
 1.1.4
 =====
 
