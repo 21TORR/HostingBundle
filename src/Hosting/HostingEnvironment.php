@@ -38,4 +38,11 @@ final class HostingEnvironment
 	{
 		return HostingTier::LIVE === $this->tier;
 	}
+
+	/**
+	 */
+	public function getTier () : HostingTier
+	{
+		return $this->tier;
+	}
 }
