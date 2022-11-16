@@ -1,3 +1,9 @@
+2.0.2
+=====
+
+* (bug) Remove unused binding.
+
+
 2.0.1
 =====
 
