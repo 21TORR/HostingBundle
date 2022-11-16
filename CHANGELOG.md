@@ -1,3 +1,9 @@
+2.0.4
+=====
+
+* (improvement) Add way to retrieve the installation key.
+
+
 2.0.3
 =====
 
