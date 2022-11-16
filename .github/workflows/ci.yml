@@ -23,7 +23,7 @@ jobs:
                     coverage: "none"
                     ini-values: "memory_limit=-1"
                     php-version: "${{ matrix.php }}"
-                    tools: "composer, composer-normalize"
+                    tools: "composer"
 
             -   name: Display versions
                 run: |
