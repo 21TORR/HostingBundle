@@ -2,27 +2,25 @@
 
 namespace Torr\Hosting\Deployment\Task;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Torr\Hosting\BuildInfo\BuildInfo;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
-use Torr\Hosting\Git\GitVersion;
+use Torr\Hosting\Deployment\TaskCli;
+use Torr\Hosting\Git\GitVersionFetcher;
 
 final class DumpGitBuildTask implements PostBuildTaskInterface
 {
-	private GitVersion $gitVersion;
+	/**
+	 */
+	public function __construct (
+		private readonly GitVersionFetcher $localGitVersionFetcher,
+		private readonly BuildInfo $buildInfo,
+	) {}
+
 
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct (GitVersion $gitVersion)
-	{
-		$this->gitVersion = $gitVersion;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getLabel() : string
+	public function getLabel () : string
 	{
 		return "Dump Git Version";
 	}
@@ -31,16 +29,20 @@ final class DumpGitBuildTask implements PostBuildTaskInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function runPostBuild(SymfonyStyle $io) : void
+	public function runPostBuild (TaskCli $io) : void
 	{
-		$io->comment("Refreshing the version");
-		$version = $this->gitVersion->refresh();
+		$version = $this->localGitVersionFetcher->detectVersion();
 
 		if (null !== $version)
 		{
+			$io->comment("Refreshing the version");
+			$this->buildInfo
+				->set("git-commit", $version["commit"])
+				->set("git-tag", $version["tag"]);
+
 			$io->writeln("Found version:");
-			$io->writeln(\sprintf("    Commit: <fg=blue>%s</>", $version->getCommit()));
-			$io->writeln(\sprintf("    Tag:    <fg=blue>%s</>", $version->getTag() ?? "—"));
+			$io->writeln(\sprintf("    Commit: <fg=blue>%s</>", $version["commit"]));
+			$io->writeln(\sprintf("    Tag:    <fg=blue>%s</>", $version["tag"] ?? "—"));
 		}
 		else
 		{

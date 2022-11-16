@@ -2,8 +2,6 @@
 
 namespace Torr\Hosting\Deployment;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-
 interface PostBuildTaskInterface
 {
 	/**
@@ -14,5 +12,5 @@ interface PostBuildTaskInterface
 	/**
 	 * Runs the post build tasks
 	 */
-	public function runPostBuild (SymfonyStyle $io) : void;
+	public function runPostBuild (TaskCli $io) : void;
 }

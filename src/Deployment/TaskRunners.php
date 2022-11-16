@@ -2,8 +2,6 @@
 
 namespace Torr\Hosting\Deployment;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-
 final class TaskRunners
 {
 	/** @var PostBuildTaskInterface[] */
@@ -25,7 +23,7 @@ final class TaskRunners
 
 	/**
 	 */
-	public function runPostBuild (SymfonyStyle $io) : void
+	public function runPostBuild (TaskCli $io) : void
 	{
 		$first = true;
 
@@ -48,7 +46,7 @@ final class TaskRunners
 
 	/**
 	 */
-	public function runPostDeployment (SymfonyStyle $io) : void
+	public function runPostDeployment (TaskCli $io) : void
 	{
 		$first = true;
 

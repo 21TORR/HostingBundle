@@ -14,5 +14,14 @@ services:
         $currentTier: !abstract defined via configuration
 
     Torr\Hosting\Deployment\TaskRunners:
-        $postBuildTasks: !tagged_iterator 21torr.hosting.post-build
-        $postDeploymentTasks: !tagged_iterator 21torr.hosting.post-deploy
+        $postBuildTasks: !tagged_iterator hosting.task.post-build
+        $postDeploymentTasks: !tagged_iterator hosting.task.post-deploy
+
+    Torr\Hosting\BuildInfo\BuildInfo:
+        $filePath: '%kernel.project_dir%/.build-info.json'
+
+    Torr\Hosting\Deployment\Task\ResetBuildInfoTask:
+        tags:
+            - name: hosting.task.post-build
+              # should run at first
+              priority: 10000
