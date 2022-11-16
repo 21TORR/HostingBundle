@@ -9,7 +9,7 @@ use Torr\BundleHelpers\Bundle\ConfigurableBundleExtension;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\PostDeploymentTaskInterface;
-use Torr\Hosting\Tier\HostingTier;
+use Torr\Hosting\Hosting\HostingEnvironment;
 
 final class HostingBundle extends Bundle
 {
@@ -23,8 +23,8 @@ final class HostingBundle extends Bundle
 			new HostingBundleConfiguration(),
 			static function (array $config, ContainerBuilder $container) : void
 			{
-				$container->getDefinition(HostingTier::class)
-					->setArgument('$currentTier', $config["tier"]);
+				$container->getDefinition(HostingEnvironment::class)
+					->setArgument('$tier', $config["tier"]);
 			},
 		);
 	}
@@ -35,10 +35,10 @@ final class HostingBundle extends Bundle
 	public function build(ContainerBuilder $container) : void
 	{
 		$container->registerForAutoconfiguration(PostBuildTaskInterface::class)
-			->addTag("21torr.hosting.post-build");
+			->addTag("hosting.task.post-build");
 
 		$container->registerForAutoconfiguration(PostDeploymentTaskInterface::class)
-			->addTag("21torr.hosting.post-deploy");
+			->addTag("hosting.task.post-deploy");
 	}
 
 

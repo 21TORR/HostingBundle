@@ -2,8 +2,6 @@
 
 namespace Torr\Hosting\Deployment;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-
 interface PostDeploymentTaskInterface
 {
 	/**
@@ -14,5 +12,5 @@ interface PostDeploymentTaskInterface
 	/**
 	 * Runs the post deployment tasks
 	 */
-	public function runPostDeployment (SymfonyStyle $io) : void;
+	public function runPostDeployment (TaskCli $io) : void;
 }

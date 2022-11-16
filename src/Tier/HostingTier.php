@@ -2,62 +2,22 @@
 
 namespace Torr\Hosting\Tier;
 
-use Torr\Hosting\Exception\InvalidCurrentHostingTierException;
-
-final class HostingTier
+enum HostingTier : string
 {
-	private const TIER_DEVELOPMENT = "development";
-	private const TIER_STAGING = "staging";
-	private const TIER_PRODUCTION = "production";
-	private string $currentTier;
+	case LIVE = "live";
+
+	case STAGING = "staging";
+
+	case DEVELOPMENT = "development";
 
 	/**
+	 *
 	 */
-	public function __construct (string $currentTier)
+	public static function getAllowedConfigValues () : array
 	{
-		if (!\in_array($currentTier, self::getAllowedTiers(), true))
-		{
-			throw new InvalidCurrentHostingTierException(\sprintf(
-				"Invalid hosting tier: '%s'. Only allowed values are: %s",
-				$currentTier,
-				\implode(", ", self::getAllowedTiers()),
-			));
-		}
-
-		$this->currentTier = $currentTier;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public static function getAllowedTiers () : array
-	{
-		return [
-			self::TIER_DEVELOPMENT,
-			self::TIER_STAGING,
-			self::TIER_PRODUCTION,
-		];
-	}
-
-	/**
-	 */
-	public function isDevelopment () : bool
-	{
-		return self::TIER_DEVELOPMENT === $this->currentTier;
-	}
-
-	/**
-	 */
-	public function isStaging () : bool
-	{
-		return self::TIER_STAGING === $this->currentTier;
-	}
-
-
-	/**
-	 */
-	public function isProduction () : bool
-	{
-		return self::TIER_PRODUCTION === $this->currentTier;
+		return \array_map(
+			static fn (self $tier) => $tier->value,
+			self::cases(),
+		);
 	}
 }

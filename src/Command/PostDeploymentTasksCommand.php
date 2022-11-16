@@ -5,12 +5,12 @@ namespace Torr\Hosting\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Torr\Hosting\Deployment\TaskCli;
 use Torr\Hosting\Deployment\TaskRunners;
 
 final class PostDeploymentTasksCommand extends Command
 {
-	protected static $defaultName = "21torr:hosting:post-deploy";
+	protected static $defaultName = "hosting:post-deploy";
 	private TaskRunners $runners;
 
 	/**
@@ -28,7 +28,7 @@ final class PostDeploymentTasksCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) : int
 	{
-		$io = new SymfonyStyle($input, $output);
+		$io = new TaskCli($input, $output);
 		$io->title("Run Post Deployment Tasks");
 
 		$this->runners->runPostDeployment($io);
