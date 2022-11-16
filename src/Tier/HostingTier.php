@@ -5,7 +5,9 @@ namespace Torr\Hosting\Tier;
 enum HostingTier : string
 {
 	case LIVE = "live";
+
 	case STAGING = "staging";
+
 	case DEVELOPMENT = "development";
 
 	/**

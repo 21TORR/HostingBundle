@@ -9,7 +9,7 @@ use Torr\BundleHelpers\Bundle\ConfigurableBundleExtension;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\PostDeploymentTaskInterface;
-use Torr\Hosting\Tier\HostingTier2;
+use Torr\Hosting\Hosting\HostingEnvironment;
 
 final class HostingBundle extends Bundle
 {
@@ -23,8 +23,8 @@ final class HostingBundle extends Bundle
 			new HostingBundleConfiguration(),
 			static function (array $config, ContainerBuilder $container) : void
 			{
-				$container->getDefinition(HostingTier2::class)
-					->setArgument('$currentTier', $config["tier"]);
+				$container->getDefinition(HostingEnvironment::class)
+					->setArgument('$tier', $config["tier"]);
 			},
 		);
 	}
