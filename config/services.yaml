@@ -10,8 +10,8 @@ services:
         resource: ../src/*
         exclude: ../src/{Exception,AssetsBundle.php}
 
-    Torr\Hosting\Tier\HostingTier:
-        $currentTier: !abstract defined via configuration
+    Torr\Hosting\Hosting\HostingEnvironment:
+        $tier: !abstract defined via configuration
 
     Torr\Hosting\Deployment\TaskRunners:
         $postBuildTasks: !tagged_iterator hosting.task.post-build

@@ -1,3 +1,9 @@
+2.0.1
+=====
+
+* (bug) Update service definition.
+
+
 2.0.0
 =====
 
