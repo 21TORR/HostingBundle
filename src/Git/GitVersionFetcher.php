@@ -18,7 +18,7 @@ final class GitVersionFetcher
 
 
 	/**
-	 * @return array{commit:string, tag:string}|null
+	 * @return array{commit:string, tag:string|null}|null
 	 */
 	public function detectVersion () : ?array
 	{
