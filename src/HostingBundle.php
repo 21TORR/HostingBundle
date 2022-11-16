@@ -24,7 +24,8 @@ final class HostingBundle extends Bundle
 			static function (array $config, ContainerBuilder $container) : void
 			{
 				$container->getDefinition(HostingEnvironment::class)
-					->setArgument('$tier', $config["tier"]);
+					->setArgument('$tier', $config["tier"])
+					->setArgument('$installationKey', $config["installation"]);
 			},
 		);
 	}

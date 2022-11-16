@@ -11,6 +11,7 @@ services:
 
     Torr\Hosting\Hosting\HostingEnvironment:
         $tier: !abstract defined via configuration
+        $installationKey: !abstract defined via configuration
 
     Torr\Hosting\Deployment\TaskRunners:
         $postBuildTasks: !tagged_iterator hosting.task.post-build

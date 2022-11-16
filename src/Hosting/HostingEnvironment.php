@@ -12,6 +12,7 @@ final class HostingEnvironment
 	 */
 	public function __construct (
 		string $tier,
+		private readonly string $installationKey,
 	)
 	{
 		$this->tier = HostingTier::from($tier);
@@ -44,5 +45,12 @@ final class HostingEnvironment
 	public function getTier () : HostingTier
 	{
 		return $this->tier;
+	}
+
+	/**
+	 */
+	public function getInstallationKey () : string
+	{
+		return $this->installationKey;
 	}
 }
