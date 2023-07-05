@@ -2,5 +2,6 @@ includes:
     - vendor-bin/test/vendor/21torr/php-cs/phpstan/lib.neon
 
 parameters:
+    level: 9
     ignoreErrors:
         - '#Strict comparison using === between null and mixed will always evaluate to false.#'
