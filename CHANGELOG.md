@@ -1,3 +1,9 @@
+2.0.5
+=====
+
+* (improvement) Fix deprecation in console commands.
+
+
 2.0.4
 =====
 
