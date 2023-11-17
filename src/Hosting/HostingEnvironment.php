@@ -11,11 +11,13 @@ final class HostingEnvironment
 	/**
 	 */
 	public function __construct (
-		string $tier,
+		string|HostingTier $tier,
 		private readonly ?string $installationKey = null,
 	)
 	{
-		$this->tier = HostingTier::from($tier);
+		$this->tier = $tier instanceof HostingTier
+			? $tier
+			: HostingTier::from($tier);
 	}
 
 	/**
