@@ -53,12 +53,12 @@ final class BuildInfoStorage
 		{
 			$data = \json_decode($content, true, flags: \JSON_THROW_ON_ERROR);
 
-			if (\is_array($data))
+			if (!\is_array($data))
 			{
 				throw new InvalidBuildInfoException("Invalid build info JSON: must be an array");
 			}
 
-			return new BuildInfo($data["data"]);
+			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
 		{
