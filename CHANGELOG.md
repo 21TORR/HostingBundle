@@ -1,4 +1,4 @@
-2.1.0 (unreleased)
+2.1.0
 =====
 
 * (deprecation) The `installation_key` config is deprecated.
