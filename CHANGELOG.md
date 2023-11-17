@@ -5,6 +5,11 @@
 * (improvement) Bump required versions to PHP 8.2+ and Symfony 6.3+ 
 * (improvement) Rename `live` hosting tier to `production`. 
 * (deprecation) Deprecated `live` hosting tier. 
+* (improvement) The command `hosting:post-build` was renamed to `hosting:run-tasks:post-build`.
+* (deprecation) The command `hosting:post-build` was deprecated.
+* (improvement) The command `hosting:post-deploy` was renamed to `hosting:run-tasks:post-deploy`.
+* (deprecation) The command `hosting:post-deploy` was  deprecated.
+* (feature) Rebuild build info system to be event-based.
 
 
 2.0.6
