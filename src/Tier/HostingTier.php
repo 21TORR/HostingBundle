@@ -2,12 +2,18 @@
 
 namespace Torr\Hosting\Tier;
 
+/**
+ */
 enum HostingTier : string
 {
+	/**
+	 * @deprecated
+	 *
+	 * @todo remove in v3
+	 */
 	case LIVE = "live";
-
+	case PRODUCTION = "production";
 	case STAGING = "staging";
-
 	case DEVELOPMENT = "development";
 
 	/**
@@ -15,9 +21,16 @@ enum HostingTier : string
 	 */
 	public static function getAllowedConfigValues () : array
 	{
-		return \array_map(
-			static fn (self $tier) => $tier->value,
-			self::cases(),
-		);
+		$result = [];
+
+		foreach (self::cases() as $tier)
+		{
+			if (self::LIVE !== $tier)
+			{
+				$result[] = $tier->value;
+			}
+		}
+
+		return $result;
 	}
 }
