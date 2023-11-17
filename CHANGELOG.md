@@ -1,3 +1,9 @@
+2.1.1
+=====
+
+* (improvement) Sort build info entries by key when writing and reading the JSON file.
+
+
 2.1.0
 =====
 

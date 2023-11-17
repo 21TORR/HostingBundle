@@ -40,12 +40,9 @@ final class ShowBuildInfoCommand extends Command
 		$io->title("Hosting: Build Info");
 
 		$info = $this->buildInfoStorage->getBuildInfo();
-		$entries = $info->getAll();
-		\uksort($entries, "strnatcasecmp");
-
 		$rows = [];
 
-		foreach ($entries as $key => $value)
+		foreach ($info->getAll() as $key => $value)
 		{
 			$rows[] = [
 				\sprintf("<fg=yellow>%s</>", $key),
