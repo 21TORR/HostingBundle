@@ -60,13 +60,13 @@ final class ShowBuildInfoCommand extends Command
 	/**
 	 */
 	private function formatValue (mixed $value) : string
- 	{
+	{
 		return match ($value)
 		{
 			null => "<fg=gray>null</>",
 			true => "<fg=green>true</>",
 			false => "<fg=red>false</>",
 			default => (string) $value,
- 		};
+		};
 	}
 }
