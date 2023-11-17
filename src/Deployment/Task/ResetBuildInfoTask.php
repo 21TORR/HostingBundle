@@ -6,6 +6,9 @@ use Torr\Hosting\BuildInfo\BuildInfoStorage;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\TaskCli;
 
+/**
+ * Refreshes the build info. Should run as first task.
+ */
 final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
 {
 	/**
