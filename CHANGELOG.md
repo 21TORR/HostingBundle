@@ -1,3 +1,9 @@
+2.1.2
+=====
+
+* (improvement) Add build date as `built` in build info by default.
+
+
 2.1.1
 =====
 
