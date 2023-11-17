@@ -2,6 +2,7 @@
 =====
 
 * (deprecation) The `installation_key` config is deprecated.
+* (improvement) Bump required versions to PHP 8.2+ and Symfony 6.3+ 
 
 
 2.0.6
