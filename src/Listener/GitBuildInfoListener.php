@@ -17,6 +17,14 @@ final readonly class GitBuildInfoListener
 	#[AsEventListener(CollectBuildInfoEvent::class)]
 	public function onCollectBuildInfo (CollectBuildInfoEvent $event) : void
 	{
-		$event->set("git", $this->localGitVersionFetcher->detectVersion());
+		$gitData = $this->localGitVersionFetcher->detectVersion();
+
+		if (null !== $gitData)
+		{
+			foreach ($gitData as $key => $value)
+			{
+				$event->set("git.{$key}", $value);
+			}
+		}
 	}
 }

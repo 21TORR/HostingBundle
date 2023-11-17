@@ -41,7 +41,7 @@ final class GitVersionFetcher
 
 		return [
 			"commit" => $commit,
-			"tag" => $tag,
+			"last-tag" => $tag,
 		];
 	}
 
