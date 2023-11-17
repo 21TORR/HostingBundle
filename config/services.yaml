@@ -18,10 +18,6 @@ services:
         $tier: !abstract defined via configuration
         $installationKey: !abstract defined via configuration
 
-    Torr\Hosting\Deployment\TaskRunners:
-        $postBuildTasks: !tagged_iterator hosting.task.post-build
-        $postDeploymentTasks: !tagged_iterator hosting.task.post-deploy
-
     Torr\Hosting\BuildInfo\BuildInfoStorage:
         $filePath: '%kernel.project_dir%/.build-info.json'
 
