@@ -7,13 +7,13 @@ use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\TaskCli;
 use Torr\Hosting\Git\GitVersionFetcher;
 
-final class DumpGitBuildTask implements PostBuildTaskInterface
+final readonly class DumpGitBuildTask implements PostBuildTaskInterface
 {
 	/**
 	 */
 	public function __construct (
-		private readonly GitVersionFetcher $localGitVersionFetcher,
-		private readonly BuildInfo $buildInfo,
+		private GitVersionFetcher $localGitVersionFetcher,
+		private BuildInfo $buildInfo,
 	) {}
 
 

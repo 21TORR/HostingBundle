@@ -6,12 +6,12 @@ use Torr\Hosting\BuildInfo\BuildInfo;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\TaskCli;
 
-final class ResetBuildInfoTask implements PostBuildTaskInterface
+final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
 {
 	/**
 	 */
 	public function __construct (
-		private readonly BuildInfo $buildInfo,
+		private BuildInfo $buildInfo,
 	) {}
 
 	/**
