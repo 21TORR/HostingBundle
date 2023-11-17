@@ -58,6 +58,8 @@ final class BuildInfoStorage
 				throw new InvalidBuildInfoException("Invalid build info JSON: must be an array");
 			}
 
+			// sort info before passing it to build info
+			\uksort($data, "strnatcasecmp");
 			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
@@ -82,11 +84,15 @@ final class BuildInfoStorage
 		$event = new CollectBuildInfoEvent();
 		$this->dispatcher->dispatch($event);
 
+		// write the data sorted into the JSON, makes debugging easier
+		$info = $event->getInfo();
+		\uksort($info, "strnatcasecmp");
+
 		try
 		{
 			$this->filesystem->dumpFile(
 				$this->filePath,
-				\json_encode($event->getInfo(), flags: \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT),
+				\json_encode($info, flags: \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT),
 			);
 		}
 		catch (\JsonException $exception)
