@@ -20,6 +20,7 @@
 		"21torr/cli": "^1.0.3",
 		"psr/log": "^3.0",
 		"symfony/cache-contracts": "^3.4",
+		"symfony/clock": "^6.3",
 		"symfony/config": "^6.3",
 		"symfony/console": "^6.3",
 		"symfony/dependency-injection": "^6.3",
