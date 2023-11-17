@@ -11,7 +11,7 @@
 	],
 	"homepage": "https://github.com/21TORR/hosting-bundle",
 	"require": {
-		"php": ">= 8.1",
+		"php": ">= 8.2",
 		"ext-ctype": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
@@ -19,19 +19,19 @@
 		"21torr/bundle-helpers": "^2.1",
 		"21torr/cli": "^1.0.3",
 		"psr/log": "^3.0",
-		"symfony/cache-contracts": "^3.0",
-		"symfony/config": "^6.1",
-		"symfony/console": "^6.1",
-		"symfony/dependency-injection": "^6.1",
+		"symfony/cache-contracts": "^3.4",
+		"symfony/config": "^6.3",
+		"symfony/console": "^6.3",
+		"symfony/dependency-injection": "^6.3",
 		"symfony/deprecation-contracts": "^3.4",
-		"symfony/filesystem": "^6.1",
-		"symfony/process": "^6.1"
+		"symfony/filesystem": "^6.3",
+		"symfony/process": "^6.3"
 	},
 	"require-dev": {
 		"bamarni/composer-bin-plugin": "^1.8.1",
-		"phpunit/phpunit": "^9.5",
+		"phpunit/phpunit": "^9.6",
 		"roave/security-advisories": "dev-latest",
-		"symfony/phpunit-bridge": "^6.1"
+		"symfony/phpunit-bridge": "^6.3"
 	},
 	"replace": {
 		"symfony/polyfill-ctype": "*",
@@ -68,7 +68,7 @@
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-next": "1.x-dev"
+			"dev-next": "2.x-dev"
 		}
 	},
 	"scripts": {
