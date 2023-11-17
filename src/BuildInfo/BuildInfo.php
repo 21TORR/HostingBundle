@@ -13,7 +13,7 @@ final readonly class BuildInfo
 	/**
 	 *
 	 */
-	public function get (string $key) : ?string
+	public function get (string $key) : string|float|int|bool|null
 	{
 		return ($this->info ?? [])[$key] ?? null;
 	}

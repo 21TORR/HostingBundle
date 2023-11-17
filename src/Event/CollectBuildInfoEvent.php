@@ -11,7 +11,7 @@ final class CollectBuildInfoEvent extends Event
 	/**
 	 * @return $this
 	 */
-	public function set (string $key, mixed $value) : self
+	public function set (string $key, string|float|int|bool|null $value) : self
 	{
 		$this->info[$key] = $value;
 
