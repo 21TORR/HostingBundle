@@ -24,6 +24,7 @@
 		"symfony/console": "^6.3",
 		"symfony/dependency-injection": "^6.3",
 		"symfony/deprecation-contracts": "^3.4",
+		"symfony/event-dispatcher-contracts": "^3.4",
 		"symfony/filesystem": "^6.3",
 		"symfony/process": "^6.3"
 	},
@@ -77,6 +78,10 @@
 		],
 		"post-update-cmd": [
 			"@composer bin all update --ansi"
+		],
+		"fix-lint": [
+			"@composer bin c-norm normalize \"$(pwd)/composer.json\" --indent-style tab --indent-size 1 --ansi",
+			"php-cs-fixer fix --diff --config vendor-bin/cs-fixer/vendor/21torr/php-cs-fixer/.php-cs-fixer.dist.php --no-interaction --ansi"
 		],
 		"lint": [
 			"@composer bin c-norm normalize \"$(pwd)/composer.json\"  --indent-style tab --indent-size 1 --dry-run --ansi",

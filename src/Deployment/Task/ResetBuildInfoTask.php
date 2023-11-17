@@ -2,16 +2,19 @@
 
 namespace Torr\Hosting\Deployment\Task;
 
-use Torr\Hosting\BuildInfo\BuildInfo;
+use Torr\Hosting\BuildInfo\BuildInfoStorage;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\TaskCli;
 
-final class ResetBuildInfoTask implements PostBuildTaskInterface
+/**
+ * Refreshes the build info. Should run as first task.
+ */
+final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
 {
 	/**
 	 */
 	public function __construct (
-		private readonly BuildInfo $buildInfo,
+		private BuildInfoStorage $buildInfo,
 	) {}
 
 	/**
@@ -27,7 +30,7 @@ final class ResetBuildInfoTask implements PostBuildTaskInterface
 	 */
 	public function runPostBuild (TaskCli $io) : void
 	{
-		$this->buildInfo->reset();
+		$this->buildInfo->refresh();
 		$io->done("Build info reset");
 	}
 }

@@ -7,17 +7,18 @@ services:
 
     Torr\Hosting\:
         resource: ../src/*
-        exclude: ../src/{Exception,AssetsBundle.php}
+        exclude:
+            - ../src/BuildInfo/BuildInfo.php
+            - ../src/DependencyInjection
+            - ../src/Event
+            - ../src/Exception
+            - ../src/HostingBundle.php
 
     Torr\Hosting\Hosting\HostingEnvironment:
         $tier: !abstract defined via configuration
         $installationKey: !abstract defined via configuration
 
-    Torr\Hosting\Deployment\TaskRunners:
-        $postBuildTasks: !tagged_iterator hosting.task.post-build
-        $postDeploymentTasks: !tagged_iterator hosting.task.post-deploy
-
-    Torr\Hosting\BuildInfo\BuildInfo:
+    Torr\Hosting\BuildInfo\BuildInfoStorage:
         $filePath: '%kernel.project_dir%/.build-info.json'
 
     Torr\Hosting\Deployment\Task\ResetBuildInfoTask:

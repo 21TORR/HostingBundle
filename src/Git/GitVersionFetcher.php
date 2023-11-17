@@ -18,7 +18,7 @@ final class GitVersionFetcher
 
 
 	/**
-	 * @return array{commit:string, tag:string|null}|null
+	 * @return array{commit:string, last-tag:string|null}|null
 	 */
 	public function detectVersion () : ?array
 	{
@@ -41,7 +41,7 @@ final class GitVersionFetcher
 
 		return [
 			"commit" => $commit,
-			"tag" => $tag,
+			"last-tag" => $tag,
 		];
 	}
 

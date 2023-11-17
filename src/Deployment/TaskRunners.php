@@ -2,23 +2,23 @@
 
 namespace Torr\Hosting\Deployment;
 
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
 final class TaskRunners
 {
-	/** @var PostBuildTaskInterface[] */
-	private iterable $postBuildTasks;
-	/** @var PostDeploymentTaskInterface[] */
-	private iterable $postDeploymentTasks;
+	public const TAG_POST_BUILD = "hosting.task.post-build";
+	public const TAG_POST_DEPLOYMENT = "hosting.task.post-deploy";
 
 	/**
 	 */
 	public function __construct (
-		iterable $postBuildTasks,
-		iterable $postDeploymentTasks,
-	)
-	{
-		$this->postBuildTasks = $postBuildTasks;
-		$this->postDeploymentTasks = $postDeploymentTasks;
-	}
+		/** @var PostBuildTaskInterface[] */
+		#[TaggedIterator(self::TAG_POST_BUILD)]
+		private iterable $postBuildTasks,
+		/** @var PostDeploymentTaskInterface[] */
+		#[TaggedIterator(self::TAG_POST_DEPLOYMENT)]
+		private iterable $postDeploymentTasks,
+	) {}
 
 
 	/**
