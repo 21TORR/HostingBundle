@@ -1,3 +1,9 @@
+2.0.6
+=====
+
+* (improvement) Also replace `symfony/polyfill-mbstring`.
+
+
 2.0.5
 =====
 
