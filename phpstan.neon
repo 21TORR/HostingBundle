@@ -5,3 +5,5 @@ parameters:
     level: 9
     ignoreErrors:
         - '#Strict comparison using === between null and mixed will always evaluate to false.#'
+        # remove with v3
+        - '#Fetching deprecated class constant LIVE of class Torr\\Hosting\\Tier\\HostingTier.#'

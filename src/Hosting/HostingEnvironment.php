@@ -4,20 +4,37 @@ namespace Torr\Hosting\Hosting;
 
 use Torr\Hosting\Tier\HostingTier;
 
-final class HostingEnvironment
+final readonly class HostingEnvironment
 {
-	private readonly HostingTier $tier;
+	private HostingTier $tier;
 
 	/**
 	 */
 	public function __construct (
 		string|HostingTier $tier,
-		private readonly ?string $installationKey = null,
+		private ?string $installationKey = null,
 	)
 	{
-		$this->tier = $tier instanceof HostingTier
-			? $tier
-			: HostingTier::from($tier);
+		$this->tier = $this->getHostingTier($tier);
+	}
+
+	/**
+	 * @todo refactor in v3
+	 */
+	private function getHostingTier (string|HostingTier $tier) : HostingTier
+	{
+		if ($tier instanceof HostingTier)
+		{
+			return $tier;
+		}
+
+		if ("live" === $tier)
+		{
+			\trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+			return HostingTier::PRODUCTION;
+		}
+
+		return HostingTier::from($tier);
 	}
 
 	/**
@@ -36,10 +53,22 @@ final class HostingEnvironment
 
 
 	/**
+	 * @deprecated use {@see self::isProduction()} instead.
+	 *
+	 * @todo remove in v3
 	 */
 	public function isLive () : bool
 	{
-		return HostingTier::LIVE === $this->tier;
+		\trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+		return $this->isProduction();
+	}
+
+
+	/**
+	 */
+	public function isProduction () : bool
+	{
+		return HostingTier::PRODUCTION === $this->tier;
 	}
 
 	/**
@@ -51,6 +80,8 @@ final class HostingEnvironment
 
 	/**
 	 * @deprecated
+	 *
+	 * @todo remove in v3
 	 */
 	public function getInstallationKey () : string
 	{

@@ -2,3 +2,4 @@
 ==========
 
 * The `installation_key` config was removed. There is no replacement, you need to implement something similar in your project directly.
+* The `live` hosting tier was removed and replaced with `production`.
