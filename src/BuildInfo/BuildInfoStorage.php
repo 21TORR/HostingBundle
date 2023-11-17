@@ -35,11 +35,11 @@ final class BuildInfoStorage
 	/**
 	 *
 	 */
-	private function loadBuildInfo () : ?BuildInfo
+	private function loadBuildInfo () : BuildInfo
 	{
 		if (!$this->filesystem->exists($this->filePath))
 		{
-			return new BuildInfo(null, new \DateTimeImmutable());
+			return new BuildInfo(null);
 		}
 
 		$content = @\file_get_contents($this->filePath);
