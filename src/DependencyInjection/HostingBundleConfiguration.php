@@ -22,6 +22,7 @@ final class HostingBundleConfiguration implements ConfigurationInterface
 					->values([...HostingTier::getAllowedConfigValues(), "live"])
 					->info("The deployment tier of the current installation")
 				->end()
+				// @todo remove in v3
 				->scalarNode("installation")
 					->defaultNull()
 					->setDeprecated("21torr/hosting", "2.1.0", "The installation key is deprecated.")
