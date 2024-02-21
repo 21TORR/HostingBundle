@@ -2,6 +2,8 @@
 =====
 
 * (improvement) Add build date as `built` in build info by default.
+* (improvement) Allow Symfony v7.
+* (improvement) Require PHP 8.3+.
 
 
 2.1.1
