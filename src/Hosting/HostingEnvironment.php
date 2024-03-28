@@ -12,7 +12,7 @@ final readonly class HostingEnvironment
 	 */
 	public function __construct (
 		string|HostingTier $tier,
-		private ?string $installationKey = null,
+		private string $installationKey,
 	)
 	{
 		$this->tier = $this->getHostingTier($tier);
@@ -79,13 +79,9 @@ final readonly class HostingEnvironment
 	}
 
 	/**
-	 * @deprecated
-	 *
-	 * @todo remove in v3
 	 */
 	public function getInstallationKey () : string
 	{
-		\trigger_deprecation("21torr/hosting", "2.1.0", "The installation key is deprecated.");
-		return $this->installationKey ?? "n/a";
+		return $this->installationKey;
 	}
 }

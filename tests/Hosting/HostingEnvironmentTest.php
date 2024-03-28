@@ -14,35 +14,22 @@ class HostingEnvironmentTest extends TestCase
 	use ExpectDeprecationTrait;
 
 	/**
-	 * @group legacy
 	 */
-	public function testLegacyInstallationKey () : void
+	public function testInstallationKey () : void
 	{
-		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The installation key is deprecated.");
 		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
 
 		self::assertSame("installation", $environment->getInstallationKey());
 	}
 
 	/**
-	 * @group legacy
-	 */
-	public function testLegacyDefaultInstallationKey () : void
-	{
-		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The installation key is deprecated.");
-		$environment = new HostingEnvironment(HostingTier::LIVE);
-
-		self::assertSame("n/a", $environment->getInstallationKey());
-	}
-
-	/**
 	 */
 	public function testHostingTierConstructor () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::LIVE);
+		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
 		self::assertSame(HostingTier::LIVE, $environment->getTier());
 
-		$environment2 = new HostingEnvironment("staging");
+		$environment2 = new HostingEnvironment("staging", "installation");
 		self::assertSame(HostingTier::STAGING, $environment2->getTier());
 	}
 
@@ -64,7 +51,7 @@ class HostingEnvironmentTest extends TestCase
 	 */
 	public function testHostingTiers (string|HostingTier $value, HostingTier $expected) : void
 	{
-		$environment = new HostingEnvironment($value);
+		$environment = new HostingEnvironment($value, "installation");
 		self::assertSame($expected, $environment->getTier());
 	}
 
@@ -74,7 +61,7 @@ class HostingEnvironmentTest extends TestCase
 	public function testLegacyLiveHostingTier () : void
 	{
 		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The hosting tier 'live' is deprecated. Use 'production' instead.");
-		$environment = new HostingEnvironment("live");
+		$environment = new HostingEnvironment("live", "installation");
 		self::assertSame(HostingTier::PRODUCTION, $environment->getTier());
 	}
 
@@ -84,7 +71,7 @@ class HostingEnvironmentTest extends TestCase
 	public function testLegacyLiveHostingTierGetter () : void
 	{
 		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The hosting tier 'live' is deprecated. Use 'production' instead.");
-		$environment = new HostingEnvironment(HostingTier::PRODUCTION);
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
 		self::assertTrue($environment->isLive());
 	}
 

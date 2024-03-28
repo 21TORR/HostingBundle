@@ -1,3 +1,9 @@
+2.1.3
+=====
+
+* (improvement) Re-add required installation key.
+
+
 2.1.2
 =====
 
