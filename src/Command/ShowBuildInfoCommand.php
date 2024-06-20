@@ -56,7 +56,7 @@ final class ShowBuildInfoCommand extends Command
 
 	/**
 	 */
-	private function formatValue (mixed $value) : mixed
+	private function formatValue (string|float|int|bool|null $value) : string|float|int
 	{
 		return match ($value)
 		{

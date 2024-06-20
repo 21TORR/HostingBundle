@@ -20,7 +20,7 @@ final class HostingEnvironmentTest extends TestCase
 	 */
 	public function testInstallationKey () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
 
 		self::assertSame("installation", $environment->getInstallationKey());
 	}
@@ -29,8 +29,8 @@ final class HostingEnvironmentTest extends TestCase
 	 */
 	public function testHostingTierConstructor () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
-		self::assertSame(HostingTier::LIVE, $environment->getTier());
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
+		self::assertSame(HostingTier::PRODUCTION, $environment->getTier());
 
 		$environment2 = new HostingEnvironment("staging", "installation");
 		self::assertSame(HostingTier::STAGING, $environment2->getTier());
