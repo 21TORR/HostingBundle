@@ -1,14 +1,9 @@
-2.1.4
-=====
-
-* (improvement) Also replace PHP 8.2 and PHP 8.3 polyfills.
-* (internal) Update CI.
-
-
 2.1.3
 =====
 
 * (improvement) Re-add required installation key.
+* (improvement) Also replace PHP 8.2 and PHP 8.3 polyfills.
+* (internal) Update CI.
 
 
 2.1.2
