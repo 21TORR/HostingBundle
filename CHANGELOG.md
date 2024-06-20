@@ -1,3 +1,10 @@
+3.0.0
+=====
+
+* (bc) Remove deprecated config and code.
+* (improvement) Require Symfony 7.
+
+
 2.1.3
 =====
 
