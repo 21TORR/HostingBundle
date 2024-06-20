@@ -2,6 +2,7 @@
 =====
 
 * (improvement) Also replace PHP 8.2 and PHP 8.3 polyfills.
+* (internal) Update CI.
 
 
 2.1.3
