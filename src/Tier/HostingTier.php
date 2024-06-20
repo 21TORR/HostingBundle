@@ -25,6 +25,7 @@ enum HostingTier : string
 
 		foreach (self::cases() as $tier)
 		{
+			// @phpstan-ignore-next-line classConstant.deprecated
 			if (self::LIVE !== $tier)
 			{
 				$result[] = $tier->value;

@@ -2,14 +2,17 @@
 
 namespace Tests\Torr\Hosting\Hosting;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\Config\Definition\Processor;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Hosting\HostingEnvironment;
-use PHPUnit\Framework\TestCase;
 use Torr\Hosting\Tier\HostingTier;
 
-class HostingEnvironmentTest extends TestCase
+/**
+ * @internal
+ */
+final class HostingEnvironmentTest extends TestCase
 {
 	use ExpectDeprecationTrait;
 
@@ -17,7 +20,7 @@ class HostingEnvironmentTest extends TestCase
 	 */
 	public function testInstallationKey () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
 
 		self::assertSame("installation", $environment->getInstallationKey());
 	}
@@ -26,8 +29,8 @@ class HostingEnvironmentTest extends TestCase
 	 */
 	public function testHostingTierConstructor () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::LIVE, "installation");
-		self::assertSame(HostingTier::LIVE, $environment->getTier());
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
+		self::assertSame(HostingTier::PRODUCTION, $environment->getTier());
 
 		$environment2 = new HostingEnvironment("staging", "installation");
 		self::assertSame(HostingTier::STAGING, $environment2->getTier());
@@ -74,7 +77,6 @@ class HostingEnvironmentTest extends TestCase
 		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
 		self::assertTrue($environment->isLive());
 	}
-
 
 	/**
 	 * @group legacy

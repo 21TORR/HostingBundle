@@ -43,7 +43,6 @@ final class HostingBundle extends Bundle
 			->addTag(TaskRunners::TAG_POST_DEPLOYMENT);
 	}
 
-
 	/**
 	 * @inheritDoc
 	 */

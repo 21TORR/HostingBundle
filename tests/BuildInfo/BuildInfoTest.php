@@ -2,15 +2,18 @@
 
 namespace Tests\Torr\Hosting\BuildInfo;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use PHPUnit\Framework\TestCase;
 use Torr\Hosting\Event\CollectBuildInfoEvent;
 use Torr\Hosting\Git\GitVersionFetcher;
 use Torr\Hosting\Listener\CoreBuildInfoListener;
 use Torr\Hosting\Listener\GitBuildInfoListener;
 
-class BuildInfoTest extends TestCase
+/**
+ * @internal
+ */
+final class BuildInfoTest extends TestCase
 {
 	/**
 	 *
@@ -26,7 +29,6 @@ class BuildInfoTest extends TestCase
 			"git.last-tag" => "t",
 		]];
 	}
-
 
 	/**
 	 * @dataProvider provideBuildInfoGitIntegration

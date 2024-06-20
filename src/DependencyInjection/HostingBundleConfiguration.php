@@ -26,7 +26,7 @@ final class HostingBundleConfiguration implements ConfigurationInterface
 					->defaultNull()
 					->info("An unique identifier to identify this unique project installation")
 					->validate()
-						->ifTrue(static function ($value) { return 0 !== \preg_match('~[^a-z0-9_-]~', $value); })
+						->ifTrue(static fn ($value) => 0 !== preg_match('~[^a-z0-9_-]~', $value))
 						->thenInvalid("The installation key may only consist of a-z 0-9 '_' and '-'.")
 					->end()
 				->end()

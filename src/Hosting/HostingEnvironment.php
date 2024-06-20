@@ -30,7 +30,9 @@ final readonly class HostingEnvironment
 
 		if ("live" === $tier)
 		{
-			\trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+			// @phpstan-ignore-next-line todoBy.sfDeprecation
+			trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+
 			return HostingTier::PRODUCTION;
 		}
 
@@ -51,18 +53,18 @@ final readonly class HostingEnvironment
 		return HostingTier::STAGING === $this->tier;
 	}
 
-
 	/**
-	 * @deprecated use {@see self::isProduction()} instead.
+	 * @deprecated use {@see self::isProduction()} instead
 	 *
 	 * @todo remove in v3
 	 */
 	public function isLive () : bool
 	{
-		\trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+		// @phpstan-ignore-next-line todoBy.sfDeprecation
+		trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
+
 		return $this->isProduction();
 	}
-
 
 	/**
 	 */

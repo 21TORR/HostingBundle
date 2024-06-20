@@ -4,9 +4,8 @@ namespace Torr\Hosting\BuildInfo;
 
 final readonly class BuildInfo
 {
-	/**
-	 */
 	public function __construct (
+		/** @var array<array-key, string|float|int|bool|null> */
 		private ?array $info,
 	) {}
 
@@ -19,7 +18,7 @@ final readonly class BuildInfo
 	}
 
 	/**
-	 *
+	 * @return array<array-key, string|float|int|bool|null>
 	 */
 	public function getAll () : array
 	{

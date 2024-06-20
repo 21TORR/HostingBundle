@@ -22,7 +22,6 @@ final class ShowBuildInfoCommand extends Command
 		parent::__construct();
 	}
 
-
 	/**
 	 * @inheritDoc
 	 */
@@ -45,18 +44,19 @@ final class ShowBuildInfoCommand extends Command
 		foreach ($info->getAll() as $key => $value)
 		{
 			$rows[] = [
-				\sprintf("<fg=yellow>%s</>", $key),
+				sprintf("<fg=yellow>%s</>", $key),
 				$this->formatValue($value),
 			];
 		}
 
 		$io->table(["Key", "Value"], $rows);
+
 		return self::SUCCESS;
 	}
 
 	/**
 	 */
-	private function formatValue (mixed $value) : mixed
+	private function formatValue (string|float|int|bool|null $value) : string|float|int
 	{
 		return match ($value)
 		{

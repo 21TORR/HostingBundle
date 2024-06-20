@@ -2,7 +2,7 @@
 
 namespace Torr\Hosting\Deployment;
 
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class TaskRunners
 {
@@ -13,13 +13,12 @@ final class TaskRunners
 	 */
 	public function __construct (
 		/** @var PostBuildTaskInterface[] */
-		#[TaggedIterator(self::TAG_POST_BUILD)]
+		#[AutowireIterator(tag: self::TAG_POST_BUILD)]
 		private iterable $postBuildTasks,
 		/** @var PostDeploymentTaskInterface[] */
-		#[TaggedIterator(self::TAG_POST_DEPLOYMENT)]
+		#[AutowireIterator(tag: self::TAG_POST_DEPLOYMENT)]
 		private iterable $postDeploymentTasks,
 	) {}
-
 
 	/**
 	 */
@@ -42,7 +41,6 @@ final class TaskRunners
 			$runner->runPostBuild($io);
 		}
 	}
-
 
 	/**
 	 */
