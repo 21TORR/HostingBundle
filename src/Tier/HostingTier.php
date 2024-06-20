@@ -6,12 +6,6 @@ namespace Torr\Hosting\Tier;
  */
 enum HostingTier : string
 {
-	/**
-	 * @deprecated
-	 *
-	 * @todo remove in v3
-	 */
-	case LIVE = "live";
 	case PRODUCTION = "production";
 	case STAGING = "staging";
 	case DEVELOPMENT = "development";
@@ -25,11 +19,7 @@ enum HostingTier : string
 
 		foreach (self::cases() as $tier)
 		{
-			// @phpstan-ignore-next-line classConstant.deprecated
-			if (self::LIVE !== $tier)
-			{
-				$result[] = $tier->value;
-			}
+			$result[] = $tier->value;
 		}
 
 		return $result;

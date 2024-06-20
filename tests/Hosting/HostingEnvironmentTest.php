@@ -3,9 +3,6 @@
 namespace Tests\Torr\Hosting\Hosting;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
-use Symfony\Component\Config\Definition\Processor;
-use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Hosting\HostingEnvironment;
 use Torr\Hosting\Tier\HostingTier;
 
@@ -14,8 +11,6 @@ use Torr\Hosting\Tier\HostingTier;
  */
 final class HostingEnvironmentTest extends TestCase
 {
-	use ExpectDeprecationTrait;
-
 	/**
 	 */
 	public function testInstallationKey () : void
@@ -56,40 +51,5 @@ final class HostingEnvironmentTest extends TestCase
 	{
 		$environment = new HostingEnvironment($value, "installation");
 		self::assertSame($expected, $environment->getTier());
-	}
-
-	/**
-	 * @group legacy
-	 */
-	public function testLegacyLiveHostingTier () : void
-	{
-		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The hosting tier 'live' is deprecated. Use 'production' instead.");
-		$environment = new HostingEnvironment("live", "installation");
-		self::assertSame(HostingTier::PRODUCTION, $environment->getTier());
-	}
-
-	/**
-	 * @group legacy
-	 */
-	public function testLegacyLiveHostingTierGetter () : void
-	{
-		$this->expectDeprecation("Since 21torr/hosting 2.1.0: The hosting tier 'live' is deprecated. Use 'production' instead.");
-		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
-		self::assertTrue($environment->isLive());
-	}
-
-	/**
-	 * @group legacy
-	 */
-	public function testLegacyConfigValues () : void
-	{
-		$config = new HostingBundleConfiguration();
-		$configProcessor = new Processor();
-		$resolved = $configProcessor->processConfiguration($config, [[
-			"tier" => "live",
-		]]);
-
-		// live is explicitly allowed
-		self::assertSame("live", $resolved["tier"]);
 	}
 }

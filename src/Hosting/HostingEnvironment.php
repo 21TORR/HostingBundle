@@ -19,24 +19,12 @@ final readonly class HostingEnvironment
 	}
 
 	/**
-	 * @todo refactor in v3
 	 */
 	private function getHostingTier (string|HostingTier $tier) : HostingTier
 	{
-		if ($tier instanceof HostingTier)
-		{
-			return $tier;
-		}
-
-		if ("live" === $tier)
-		{
-			// @phpstan-ignore-next-line todoBy.sfDeprecation
-			trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
-
-			return HostingTier::PRODUCTION;
-		}
-
-		return HostingTier::from($tier);
+		return $tier instanceof HostingTier
+			? $tier
+			: HostingTier::from($tier);
 	}
 
 	/**
@@ -51,19 +39,6 @@ final readonly class HostingEnvironment
 	public function isStaging () : bool
 	{
 		return HostingTier::STAGING === $this->tier;
-	}
-
-	/**
-	 * @deprecated use {@see self::isProduction()} instead
-	 *
-	 * @todo remove in v3
-	 */
-	public function isLive () : bool
-	{
-		// @phpstan-ignore-next-line todoBy.sfDeprecation
-		trigger_deprecation("21torr/hosting", "2.1.0", "The hosting tier 'live' is deprecated. Use 'production' instead.");
-
-		return $this->isProduction();
 	}
 
 	/**
