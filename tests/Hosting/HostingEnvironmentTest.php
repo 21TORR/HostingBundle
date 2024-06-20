@@ -2,14 +2,17 @@
 
 namespace Tests\Torr\Hosting\Hosting;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\Config\Definition\Processor;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Hosting\HostingEnvironment;
-use PHPUnit\Framework\TestCase;
 use Torr\Hosting\Tier\HostingTier;
 
-class HostingEnvironmentTest extends TestCase
+/**
+ * @internal
+ */
+final class HostingEnvironmentTest extends TestCase
 {
 	use ExpectDeprecationTrait;
 
@@ -74,7 +77,6 @@ class HostingEnvironmentTest extends TestCase
 		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
 		self::assertTrue($environment->isLive());
 	}
-
 
 	/**
 	 * @group legacy

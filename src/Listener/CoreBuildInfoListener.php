@@ -12,7 +12,6 @@ final readonly class CoreBuildInfoListener
 		private ClockInterface $clock,
 	) {}
 
-
 	/**
 	 */
 	#[AsEventListener(CollectBuildInfoEvent::class)]

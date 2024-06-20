@@ -23,7 +23,6 @@ final class PostBuildTasksCommand extends Command
 		$this->runners = $runners;
 	}
 
-
 	/**
 	 * @inheritDoc
 	 */
@@ -34,8 +33,8 @@ final class PostBuildTasksCommand extends Command
 		// @todo remove in v3 and remove alias above
 		if ("hosting:run-tasks:post-build" !== $input->getFirstArgument())
 		{
-			\trigger_deprecation("21torr/hosting", "2.1.0", "The command name '{$input->getFirstArgument()}' was deprecated. Use 'hosting:run-tasks:post-build' instead.");
-			$io->caution(\sprintf(
+			trigger_deprecation("21torr/hosting", "2.1.0", "The command name '{$input->getFirstArgument()}' was deprecated. Use 'hosting:run-tasks:post-build' instead.");
+			$io->caution(sprintf(
 				"The command name `%s` was deprecated.\nUse `hosting:run-tasks:post-build` instead.",
 				$input->getFirstArgument(),
 			));

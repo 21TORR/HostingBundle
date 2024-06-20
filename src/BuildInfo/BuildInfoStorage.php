@@ -31,7 +31,6 @@ final class BuildInfoStorage
 		);
 	}
 
-
 	/**
 	 *
 	 */
@@ -42,7 +41,7 @@ final class BuildInfoStorage
 			return new BuildInfo(null);
 		}
 
-		$content = @\file_get_contents($this->filePath);
+		$content = @file_get_contents($this->filePath);
 
 		if (false === $content)
 		{
@@ -51,7 +50,7 @@ final class BuildInfoStorage
 
 		try
 		{
-			$data = \json_decode($content, true, flags: \JSON_THROW_ON_ERROR);
+			$data = json_decode($content, true, flags: \JSON_THROW_ON_ERROR);
 
 			if (!\is_array($data))
 			{
@@ -59,13 +58,14 @@ final class BuildInfoStorage
 			}
 
 			// sort info before passing it to build info
-			\uksort($data, "strnatcasecmp");
+			uksort($data, "strnatcasecmp");
+
 			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
 		{
 			throw new InvalidBuildInfoException(
-				\sprintf("Invalid build info JSON: %s", $exception->getMessage()),
+				sprintf("Invalid build info JSON: %s", $exception->getMessage()),
 				previous: $exception,
 			);
 		}
@@ -86,22 +86,21 @@ final class BuildInfoStorage
 
 		// write the data sorted into the JSON, makes debugging easier
 		$info = $event->getInfo();
-		\uksort($info, "strnatcasecmp");
+		uksort($info, "strnatcasecmp");
 
 		try
 		{
 			$this->filesystem->dumpFile(
 				$this->filePath,
-				\json_encode($info, flags: \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT),
+				json_encode($info, flags: \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT),
 			);
 		}
 		catch (\JsonException $exception)
 		{
 			throw new InvalidBuildInfoException(
-				\sprintf("Failed to write build info JSON: %s", $exception->getMessage()),
+				sprintf("Failed to write build info JSON: %s", $exception->getMessage()),
 				previous: $exception,
 			);
 		}
-
 	}
 }

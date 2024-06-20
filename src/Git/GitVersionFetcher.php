@@ -19,7 +19,6 @@ class GitVersionFetcher
 		private readonly string $projectDir,
 	) {}
 
-
 	/**
 	 * @return array{commit:string, last-tag:string|null}|null
 	 */
@@ -39,6 +38,7 @@ class GitVersionFetcher
 		if (!\is_string($commit))
 		{
 			$this->logger->error("Could not fetch current installed version: no current commit.");
+
 			return null;
 		}
 
@@ -47,7 +47,6 @@ class GitVersionFetcher
 			"last-tag" => $tag,
 		];
 	}
-
 
 	/**
 	 * Runs the given command in the project dir
@@ -58,7 +57,7 @@ class GitVersionFetcher
 		{
 			$process = new Process($command, $this->projectDir);
 			$process->mustRun();
-			$result = \trim($process->getOutput());
+			$result = trim($process->getOutput());
 
 			return "" !== $result
 				? $result
