@@ -11,8 +11,8 @@ final readonly class HostingEnvironment
 	/**
 	 */
 	public function __construct (
-		private string $installationKey,
 		HostingTier|string $tier,
+		private ?string $installationKey = null,
 	)
 	{
 		$this->tier = is_string($tier)
@@ -50,7 +50,7 @@ final readonly class HostingEnvironment
 
 	/**
 	 */
-	public function getInstallationKey () : string
+	public function getInstallationKey () : ?string
 	{
 		return $this->installationKey;
 	}
