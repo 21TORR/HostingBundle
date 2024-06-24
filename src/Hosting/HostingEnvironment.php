@@ -11,20 +11,13 @@ final readonly class HostingEnvironment
 	/**
 	 */
 	public function __construct (
-		string|HostingTier $tier,
-		private string $installationKey,
+		HostingTier|string $tier,
+		private ?string $installationKey = null,
 	)
 	{
-		$this->tier = $this->getHostingTier($tier);
-	}
-
-	/**
-	 */
-	private function getHostingTier (string|HostingTier $tier) : HostingTier
-	{
-		return $tier instanceof HostingTier
-			? $tier
-			: HostingTier::from($tier);
+		$this->tier = \is_string($tier)
+			? HostingTier::from($tier)
+			: $tier;
 	}
 
 	/**
@@ -57,7 +50,7 @@ final readonly class HostingEnvironment
 
 	/**
 	 */
-	public function getInstallationKey () : string
+	public function getInstallationKey () : ?string
 	{
 		return $this->installationKey;
 	}

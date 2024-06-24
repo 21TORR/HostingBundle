@@ -18,8 +18,7 @@ final class HostingBundleConfiguration implements ConfigurationInterface
 		$treeBuilder->getRootNode()
 			->children()
 				->enumNode("tier")
-					// @todo update in v3
-					->values([...HostingTier::getAllowedConfigValues(), "live"])
+					->values(HostingTier::cases())
 					->info("The deployment tier of the current installation")
 				->end()
 				->scalarNode("installation")

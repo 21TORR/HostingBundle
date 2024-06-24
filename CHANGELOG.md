@@ -1,3 +1,12 @@
+3.0.1
+=====
+
+* (internal) Remove missed deprecated code.
+* (bug) Fix break when not passing an installation key.
+* (internal) Add branch alias.
+* (internal) Fixate PHPUnit version.
+
+
 3.0.0
 =====
 
