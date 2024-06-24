@@ -15,7 +15,7 @@ final readonly class HostingEnvironment
 		private ?string $installationKey = null,
 	)
 	{
-		$this->tier = is_string($tier)
+		$this->tier = \is_string($tier)
 			? HostingTier::from($tier)
 			: $tier;
 	}
