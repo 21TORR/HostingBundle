@@ -6,13 +6,13 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Torr\Hosting\Deployment\TaskCli;
 use Torr\Hosting\Deployment\HookRunners;
+use Torr\Hosting\Deployment\TaskCli;
 
 #[AsCommand(
 	"hosting:hook:build",
 	description: "Runs the hooks for 'after the build finished'",
-	aliases: ["hosting:run-tasks:post-build"]
+	aliases: ["hosting:run-tasks:post-build"],
 )]
 final class BuildHooksCommand extends Command
 {
@@ -35,6 +35,7 @@ final class BuildHooksCommand extends Command
 		$io = new TaskCli($input, $output);
 		$io->title("Run Build Hooks");
 
+		// @todo remove code block + alias in v4
 		if ("hosting:hook:build" !== $input->getFirstArgument())
 		{
 			$message = sprintf(

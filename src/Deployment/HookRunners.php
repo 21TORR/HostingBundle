@@ -6,17 +6,17 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class HookRunners
 {
-	public const string TAG_BUILD = "hosting.hook.build";
-	public const string TAG_DEPLOY = "hosting.hook.deploy";
+	public const string TAG_BUILD_HOOK = "hosting.hook.build";
+	public const string TAG_DEPLOY_HOOK = "hosting.hook.deploy";
 
 	/**
 	 */
 	public function __construct (
-		/** @var PostBuildTaskInterface[] */
-		#[AutowireIterator(tag: self::TAG_BUILD)]
+		/** @var BuildHookInterface[] */
+		#[AutowireIterator(tag: self::TAG_BUILD_HOOK)]
 		private iterable $buildHooks,
-		/** @var PostDeploymentTaskInterface[] */
-		#[AutowireIterator(tag: self::TAG_DEPLOY)]
+		/** @var DeployHookInterface[] */
+		#[AutowireIterator(tag: self::TAG_DEPLOY_HOOK)]
 		private iterable $deployHooks,
 	) {}
 

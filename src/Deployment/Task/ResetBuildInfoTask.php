@@ -3,13 +3,13 @@
 namespace Torr\Hosting\Deployment\Task;
 
 use Torr\Hosting\BuildInfo\BuildInfoStorage;
-use Torr\Hosting\Deployment\PostBuildTaskInterface;
+use Torr\Hosting\Deployment\BuildHookInterface;
 use Torr\Hosting\Deployment\TaskCli;
 
 /**
  * Refreshes the build info. Should run as first task.
  */
-final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
+final readonly class ResetBuildInfoTask implements BuildHookInterface
 {
 	/**
 	 */
@@ -18,7 +18,6 @@ final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
 	) {}
 
 	/**
-	 * @inheritDoc
 	 */
 	public function getLabel () : string
 	{
@@ -26,7 +25,6 @@ final readonly class ResetBuildInfoTask implements PostBuildTaskInterface
 	}
 
 	/**
-	 * @inheritDoc
 	 */
 	public function runPostBuild (TaskCli $io) : void
 	{

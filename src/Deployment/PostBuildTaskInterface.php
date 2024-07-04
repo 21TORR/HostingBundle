@@ -2,15 +2,11 @@
 
 namespace Torr\Hosting\Deployment;
 
-interface PostBuildTaskInterface
+/**
+ * @deprecated use {@see BuildHookInterface} instead
+ *
+ * @todo remove in v4
+ */
+interface PostBuildTaskInterface extends BuildHookInterface
 {
-	/**
-	 * Returns the label of the run
-	 */
-	public function getLabel () : string;
-
-	/**
-	 * Runs the post build tasks
-	 */
-	public function runPostBuild (TaskCli $io) : void;
 }
