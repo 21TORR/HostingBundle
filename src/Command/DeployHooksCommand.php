@@ -49,7 +49,7 @@ final class DeployHooksCommand extends Command
 			$io->caution($message);
 		}
 
-		$this->runners->runPostDeployment($io);
+		$this->runners->runDeployHooks($io);
 
 		$io->newLine();
 		$io->success("Ran all deploy hooks.");

@@ -9,7 +9,7 @@ use Torr\BundleHelpers\Bundle\ConfigurableBundleExtension;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
 use Torr\Hosting\Deployment\PostBuildTaskInterface;
 use Torr\Hosting\Deployment\PostDeploymentTaskInterface;
-use Torr\Hosting\Deployment\TaskRunners;
+use Torr\Hosting\Deployment\HookRunners;
 use Torr\Hosting\Hosting\HostingEnvironment;
 
 final class HostingBundle extends Bundle
@@ -37,10 +37,10 @@ final class HostingBundle extends Bundle
 	public function build(ContainerBuilder $container) : void
 	{
 		$container->registerForAutoconfiguration(PostBuildTaskInterface::class)
-			->addTag(TaskRunners::TAG_POST_BUILD);
+			->addTag(HookRunners::TAG_BUILD);
 
 		$container->registerForAutoconfiguration(PostDeploymentTaskInterface::class)
-			->addTag(TaskRunners::TAG_POST_DEPLOYMENT);
+			->addTag(HookRunners::TAG_DEPLOY);
 	}
 
 	/**

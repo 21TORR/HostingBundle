@@ -49,7 +49,7 @@ final class BuildHooksCommand extends Command
 			$io->caution($message);
 		}
 
-		$this->runners->runPostBuild($io);
+		$this->runners->runBuildHooks($io);
 
 		$io->newLine();
 		$io->success("Ran all build hooks.");
