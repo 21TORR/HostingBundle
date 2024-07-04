@@ -2,15 +2,11 @@
 
 namespace Torr\Hosting\Deployment;
 
-interface PostDeploymentTaskInterface
+/**
+ * @deprecated use {@see DeployHookInterface} instead
+ *
+ * @todo remove in v4
+ */
+interface PostDeploymentTaskInterface extends DeployHookInterface
 {
-	/**
-	 * Returns the label of the run
-	 */
-	public function getLabel () : string;
-
-	/**
-	 * Runs the post deployment tasks
-	 */
-	public function runPostDeployment (TaskCli $io) : void;
 }

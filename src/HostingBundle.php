@@ -7,9 +7,9 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Torr\BundleHelpers\Bundle\ConfigurableBundleExtension;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
-use Torr\Hosting\Deployment\PostBuildTaskInterface;
-use Torr\Hosting\Deployment\PostDeploymentTaskInterface;
-use Torr\Hosting\Deployment\TaskRunners;
+use Torr\Hosting\Deployment\BuildHookInterface;
+use Torr\Hosting\Deployment\DeployHookInterface;
+use Torr\Hosting\Deployment\HookRunners;
 use Torr\Hosting\Hosting\HostingEnvironment;
 
 final class HostingBundle extends Bundle
@@ -36,11 +36,11 @@ final class HostingBundle extends Bundle
 	 */
 	public function build(ContainerBuilder $container) : void
 	{
-		$container->registerForAutoconfiguration(PostBuildTaskInterface::class)
-			->addTag(TaskRunners::TAG_POST_BUILD);
+		$container->registerForAutoconfiguration(BuildHookInterface::class)
+			->addTag(HookRunners::TAG_BUILD_HOOK);
 
-		$container->registerForAutoconfiguration(PostDeploymentTaskInterface::class)
-			->addTag(TaskRunners::TAG_POST_DEPLOYMENT);
+		$container->registerForAutoconfiguration(DeployHookInterface::class)
+			->addTag(HookRunners::TAG_DEPLOY_HOOK);
 	}
 
 	/**

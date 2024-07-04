@@ -1,3 +1,13 @@
+3.1.0
+=====
+
+* (feature) Rename `Post*` tasks concept name to "hooks".
+* (deprecation) Deprecate command `hosting:run-tasks:post-build`, use `hosting:hook:build` instead.
+* (deprecation) Deprecate command `hosting:run-tasks:post-deploy`, use `hosting:hook:deploy` instead.
+* (deprecation) Deprecate `PostBuildTaskInterface`, use `BuildHookInterface` instead.
+* (deprecation) Deprecate `PostDeploymentTaskInterface`, use `DeployHookInterface` instead.
+
+
 3.0.1
 =====
 

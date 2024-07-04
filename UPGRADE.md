@@ -1,3 +1,12 @@
+3.x to 4.0
+==========
+
+* Command `hosting:run-tasks:post-build` was removed, use `hosting:hook:build` instead.
+* Command `hosting:run-tasks:post-deploy` was removed, use `hosting:hook:deploy` instead.
+* Interface `PostBuildTaskInterface` was removed, use `BuildHookInterface` instead.
+* Interface `PostDeploymentTaskInterface` was removed, use `DeployHookInterface` instead.
+
+
 2.x to 3.0
 ==========
 
