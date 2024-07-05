@@ -13,7 +13,6 @@ use Torr\Hosting\BuildInfo\BuildInfoStorage;
 final class ShowBuildInfoCommand extends Command
 {
 	/**
-	 * @inheritDoc
 	 */
 	public function __construct (
 		private readonly BuildInfoStorage $buildInfoStorage,
@@ -23,16 +22,16 @@ final class ShowBuildInfoCommand extends Command
 	}
 
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	protected function configure () : void
 	{
 		$this->setDescription("Shows the current build info");
 	}
 
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TorrStyle($input, $output);

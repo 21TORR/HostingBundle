@@ -19,17 +19,16 @@ final class BuildHooksCommand extends Command
 	private HookRunners $runners;
 
 	/**
-	 * @inheritDoc
 	 */
-	public function __construct(HookRunners $runners)
+	public function __construct (HookRunners $runners)
 	{
 		parent::__construct();
 		$this->runners = $runners;
 	}
 
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);
