@@ -15,8 +15,8 @@ use Torr\Hosting\Hosting\HostingEnvironment;
 final class HostingBundle extends Bundle
 {
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getContainerExtension() : ExtensionInterface
 	{
 		return new ConfigurableBundleExtension(
@@ -32,8 +32,8 @@ final class HostingBundle extends Bundle
 	}
 
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	public function build(ContainerBuilder $container) : void
 	{
 		$container->registerForAutoconfiguration(BuildHookInterface::class)
@@ -44,8 +44,8 @@ final class HostingBundle extends Bundle
 	}
 
 	/**
-	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getPath() : string
 	{
 		return \dirname(__DIR__);

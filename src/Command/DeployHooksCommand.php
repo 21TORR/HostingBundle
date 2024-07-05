@@ -19,18 +19,16 @@ final class DeployHooksCommand extends Command
 	private HookRunners $runners;
 
 	/**
-	 * @inheritDoc
 	 */
-	public function __construct(HookRunners $runners)
+	public function __construct (HookRunners $runners)
 	{
 		parent::__construct();
 		$this->runners = $runners;
 	}
 
 	/**
-	 * @inheritDoc
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output) : int
+	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);
 		$io->title("Run Deploy Hooks");

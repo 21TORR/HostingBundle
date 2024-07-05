@@ -9,9 +9,9 @@ use Torr\Hosting\Tier\HostingTier;
 final class HostingBundleConfiguration implements ConfigurationInterface
 {
 	/**
-	 * @inheritDoc
 	 */
-	public function getConfigTreeBuilder() : TreeBuilder
+	#[\Override]
+	public function getConfigTreeBuilder () : TreeBuilder
 	{
 		$treeBuilder = new TreeBuilder("hosting");
 
