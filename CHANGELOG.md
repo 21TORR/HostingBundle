@@ -2,6 +2,7 @@
 =====
 
 * (feature) Add health checks (live + ready).
+* (improvement) Bump Janus and update CI.
 
 
 3.1.0
