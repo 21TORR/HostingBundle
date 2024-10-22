@@ -32,6 +32,7 @@
 	"require-dev": {
 		"21torr/janus": "^1.4",
 		"bamarni/composer-bin-plugin": "^1.8",
+		"doctrine/orm": "^3.0",
 		"roave/security-advisories": "dev-latest",
 		"symfony/phpunit-bridge": "^7.1"
 	},
@@ -53,6 +54,9 @@
 		"symfony/polyfill-php81": "*",
 		"symfony/polyfill-php82": "*",
 		"symfony/polyfill-php83": "*"
+	},
+	"suggest": {
+		"doctrine/orm": "For automatic integration of health checks"
 	},
 	"autoload": {
 		"psr-4": {
