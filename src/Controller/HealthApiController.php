@@ -2,9 +2,11 @@
 
 namespace Torr\Hosting\Controller;
 
+use Psr\Cache\CacheItemInterface;
+use Psr\Clock\ClockInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Torr\Hosting\Event\HealthCheckLiveEvent;
 use Torr\Hosting\Event\HealthCheckReadyEvent;
@@ -14,47 +16,49 @@ use Torr\Hosting\Event\HealthCheckReadyEvent;
  */
 class HealthApiController extends AbstractController
 {
-	/**
-	 *
-	 */
-	public function liveEndpoint (
-		EventDispatcherInterface $dispatcher,
-	) : JsonResponse
-	{
-		return $this->runHealthCheck(
-			$dispatcher->dispatch(new HealthCheckLiveEvent()),
-		);
-	}
+	private const string CACHE_KEY = "hosting.health_check.%s";
 
 	/**
 	 *
 	 */
-	public function readyEndpoint (
+	public function healthCheckEndpoint (
 		EventDispatcherInterface $dispatcher,
-	) : Response
-	{
-		return $this->runHealthCheck(
-			$dispatcher->dispatch(new HealthCheckReadyEvent()),
-		);
-	}
-
-	/**
-	 *
-	 */
-	private function runHealthCheck (
-		HealthCheckLiveEvent|HealthCheckReadyEvent $event,
+		CacheInterface $cache,
+		ClockInterface $clock,
+		string $type,
 	) : JsonResponse
 	{
-		if (!$event->isHealthy())
+		$event = match ($type)
+		{
+			"live" => new HealthCheckLiveEvent(),
+			"ready" => new HealthCheckReadyEvent(),
+			default => throw $this->createNotFoundException("Unknown health check type \"{$type}\""),
+		};
+
+		$failedCheck = $cache->get(
+			\sprintf(self::CACHE_KEY, $type),
+			static function (CacheItemInterface $item) use ($dispatcher, $event)
+			{
+				// cache for at most 60s
+				$item->expiresAfter(60);
+
+				return $dispatcher->dispatch($event)->getFailedCheck();
+			},
+		);
+
+		// check whether any check failed
+		if (null !== $failedCheck)
 		{
 			return $this->json([
 				"ok" => false,
-				"failed" => $event->getFailedCheck(),
+				"failed" => $failedCheck,
+				"checked" => $clock->now()->format("c"),
 			], 503);
 		}
 
 		return $this->json([
 			"ok" => true,
+			"checked" => $clock->now()->format("c"),
 		]);
 	}
 }

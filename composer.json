@@ -19,6 +19,7 @@
 		"21torr/bundle-helpers": "^2.2",
 		"21torr/cli": "^1.2.3",
 		"psr/log": "^3.0",
+		"symfony/cache": "^7.1",
 		"symfony/cache-contracts": "^3.5",
 		"symfony/clock": "^7.1",
 		"symfony/config": "^7.1",
