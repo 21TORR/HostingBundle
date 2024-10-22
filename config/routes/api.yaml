@@ -1,0 +1,7 @@
+hosting.api.live:
+    path: /live
+    controller: Torr\Hosting\Controller\HealthApiController::liveEndpoint
+
+hosting.api.ready:
+    path: /ready
+    controller: Torr\Hosting\Controller\HealthApiController::readyEndpoint
