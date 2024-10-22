@@ -18,7 +18,7 @@ readonly class DoctrineHealthCheckListener
 		private ?EntityManagerInterface $entityManager = null,
 	) {}
 
-	#[AsEventListener]
+	#[AsEventListener(priority: -100)]
 	public function onLiveCheck (HealthCheckLiveEvent $event) : void
 	{
 		if (null === $this->entityManager || !class_exists(SchemaValidator::class))
