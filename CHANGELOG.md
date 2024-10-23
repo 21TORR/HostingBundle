@@ -4,6 +4,7 @@
 * (feature) Add health checks (live + ready).
 * (improvement) Bump Janus and update CI.
 * (feature) Add default doctrine check integration.
+* (feature) Add `hosting:validate-app` command for usage in the CI.
 
 
 3.1.0
