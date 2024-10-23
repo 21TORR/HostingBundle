@@ -3,6 +3,7 @@
 namespace Torr\Hosting\Command;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,6 +24,7 @@ class ValidateAppCommand extends Command
 	 */
 	public function __construct (
 		private readonly EventDispatcherInterface $dispatcher,
+		private readonly LoggerInterface $logger,
 	)
 	{
 		parent::__construct();
@@ -35,9 +37,19 @@ class ValidateAppCommand extends Command
 		$io = new TorrStyle($input, $output);
 		$io->title("Hosting: Validate App");
 
-		$event = new ValidateAppEvent($io);
-		$this->dispatcher->dispatch($event);
-		$failedCheck = $event->getFailedCheck();
+		try
+		{
+			$event = new ValidateAppEvent($io);
+			$this->dispatcher->dispatch($event);
+			$failedCheck = $event->getFailedCheck();
+		}
+		catch (\Exception $exception)
+		{
+			$this->logger->error("Failed to validate app", [
+				"exception" => $exception,
+			]);
+			$failedCheck = $exception->getMessage();
+		}
 
 		if (null !== $failedCheck)
 		{

@@ -4,7 +4,6 @@ namespace Torr\Hosting\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Torr\Hosting\Tier\HostingTier;
 
 final class HostingBundleConfiguration implements ConfigurationInterface
 {
@@ -17,8 +16,10 @@ final class HostingBundleConfiguration implements ConfigurationInterface
 
 		$treeBuilder->getRootNode()
 			->children()
-				->enumNode("tier")
-					->values(HostingTier::cases())
+				// as we want to allow env vars here, we can't add the validation here, instead we
+				// need to validate it at runtime
+				->scalarNode("tier")
+					->isRequired()
 					->info("The deployment tier of the current installation")
 				->end()
 				->scalarNode("installation")
