@@ -36,7 +36,7 @@ final class DeployHooksCommand extends Command
 		// @todo remove code block + alias in v4
 		if ("hosting:hook:build" !== $input->getFirstArgument())
 		{
-			$message = sprintf(
+			$message = \sprintf(
 				"The command `%s` was deprecated. Use `hosting:hook:deploy` instead.",
 				$input->getFirstArgument(),
 			);

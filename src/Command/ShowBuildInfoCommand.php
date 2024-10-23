@@ -43,7 +43,7 @@ final class ShowBuildInfoCommand extends Command
 		foreach ($info->getAll() as $key => $value)
 		{
 			$rows[] = [
-				sprintf("<fg=yellow>%s</>", $key),
+				\sprintf("<fg=yellow>%s</>", $key),
 				$this->formatValue($value),
 			];
 		}

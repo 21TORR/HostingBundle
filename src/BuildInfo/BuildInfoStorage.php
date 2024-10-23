@@ -65,7 +65,7 @@ final class BuildInfoStorage
 		catch (\JsonException $exception)
 		{
 			throw new InvalidBuildInfoException(
-				sprintf("Invalid build info JSON: %s", $exception->getMessage()),
+				\sprintf("Invalid build info JSON: %s", $exception->getMessage()),
 				previous: $exception,
 			);
 		}
@@ -98,7 +98,7 @@ final class BuildInfoStorage
 		catch (\JsonException $exception)
 		{
 			throw new InvalidBuildInfoException(
-				sprintf("Failed to write build info JSON: %s", $exception->getMessage()),
+				\sprintf("Failed to write build info JSON: %s", $exception->getMessage()),
 				previous: $exception,
 			);
 		}

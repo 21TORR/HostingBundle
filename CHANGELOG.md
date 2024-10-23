@@ -1,3 +1,11 @@
+3.2.0
+=====
+
+* (feature) Add health checks (live + ready).
+* (improvement) Bump Janus and update CI.
+* (feature) Add default doctrine check integration.
+
+
 3.1.0
 =====
 
