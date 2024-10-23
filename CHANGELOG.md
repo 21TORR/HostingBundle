@@ -2,6 +2,7 @@
 =====
 
 * (improvement) Change configuration of hosting tier to allow better using it.
+* (improvement) Automatically catch all exceptions in the validate app command.
 
 
 3.2.0
