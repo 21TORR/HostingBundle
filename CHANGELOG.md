@@ -1,3 +1,9 @@
+3.2.1
+=====
+
+* (improvement) Change configuration of hosting tier to allow better using it.
+
+
 3.2.0
 =====
 
