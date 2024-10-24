@@ -12,7 +12,6 @@ use Torr\Hosting\Deployment\TaskCli;
 #[AsCommand(
 	"hosting:hook:deploy",
 	description: "Runs the hooks for 'after the deployment finished'",
-	aliases: ["hosting:run-tasks:post-deploy"],
 )]
 final class DeployHooksCommand extends Command
 {
@@ -32,21 +31,6 @@ final class DeployHooksCommand extends Command
 	{
 		$io = new TaskCli($input, $output);
 		$io->title("Run Deploy Hooks");
-
-		// @todo remove code block + alias in v4
-		if ("hosting:hook:deploy" !== $input->getFirstArgument())
-		{
-			$message = \sprintf(
-				"The command `%s` was deprecated. Use `hosting:hook:deploy` instead.",
-				$input->getFirstArgument(),
-			);
-			trigger_deprecation(
-				"21torr/hosting",
-				"3.1.0",
-				$message,
-			);
-			$io->caution($message);
-		}
 
 		$this->runners->runDeployHooks($io);
 

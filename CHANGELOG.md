@@ -1,3 +1,13 @@
+4.0.0
+=====
+
+* (bc) The config key was changed to `21torr_hosting`.
+* (bc) Remove command `hosting:run-tasks:post-build`, use `hosting:hook:build` instead.
+* (bc) Remove command `hosting:run-tasks:post-deploy`, use `hosting:hook:deploy` instead.
+* (bc) Remove `PostBuildTaskInterface`, use `BuildHookInterface` instead.
+* (bc) Remove `PostDeploymentTaskInterface`, use `DeployHookInterface` instead.
+
+
 3.2.2
 =====
 
