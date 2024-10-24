@@ -5,7 +5,6 @@
 * Command `hosting:run-tasks:post-deploy` was removed, use `hosting:hook:deploy` instead.
 * Interface `PostBuildTaskInterface` was removed, use `BuildHookInterface` instead.
 * Interface `PostDeploymentTaskInterface` was removed, use `DeployHookInterface` instead.
-* The config key was changed to `21torr_hosting` (from `hosting`).
 
 
 2.x to 3.0

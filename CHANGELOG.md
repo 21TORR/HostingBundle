@@ -1,3 +1,9 @@
+4.0.1
+=====
+
+* (bug) Keep using the `hosting` config key.
+
+
 4.0.0
 =====
 

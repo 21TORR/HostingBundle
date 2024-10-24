@@ -28,7 +28,6 @@ final class HostingBundle extends Bundle
 					->setArgument('$tier', $config["tier"])
 					->setArgument('$installationKey', $config["installation"]);
 			},
-			"21torr_hosting",
 		);
 	}
 
