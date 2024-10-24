@@ -1,3 +1,9 @@
+4.0.0
+=====
+
+* (bc) The config key was changed to `21torr_hosting`.
+
+
 3.2.2
 =====
 

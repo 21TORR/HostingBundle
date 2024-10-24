@@ -12,7 +12,7 @@ final class HostingBundleConfiguration implements ConfigurationInterface
 	#[\Override]
 	public function getConfigTreeBuilder () : TreeBuilder
 	{
-		$treeBuilder = new TreeBuilder("hosting");
+		$treeBuilder = new TreeBuilder("21torr_hosting");
 
 		$treeBuilder->getRootNode()
 			->children()
