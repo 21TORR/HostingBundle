@@ -1,3 +1,9 @@
+3.2.2
+=====
+
+* (bug) Fix typo in BC layer of `hosting:hook:deploy` command.
+
+
 3.2.1
 =====
 
