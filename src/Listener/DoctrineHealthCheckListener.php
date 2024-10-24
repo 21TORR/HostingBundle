@@ -47,7 +47,7 @@ readonly class DoctrineHealthCheckListener
 		{
 			$event->markAsFailed("doctrine: database out of sync");
 			$this->logger->critical("Failed doctrine health check: database out of sync", [
-				"issues" => $result,
+				"updateSchemaList" => $databaseUpdateSchemaList,
 			]);
 		}
 	}
