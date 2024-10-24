@@ -1,3 +1,9 @@
+4.0.3
+=====
+
+* (bug) Fix wrong log context.
+
+
 4.0.2
 =====
 
