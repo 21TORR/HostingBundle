@@ -1,3 +1,9 @@
+4.0.2
+=====
+
+* (improvement) Log doctrine health check issues.
+
+
 4.0.1
 =====
 
