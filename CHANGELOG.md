@@ -1,3 +1,9 @@
+4.0.4
+=====
+
+* (improvement) Ignore "DROP TABLE doctrine_migration_versions" in the doctrine update schema list in `DoctrineHealthCheckListener`.
+
+
 4.0.3
 =====
 

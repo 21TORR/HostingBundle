@@ -41,7 +41,8 @@ readonly class DoctrineHealthCheckListener
 			return;
 		}
 
-		$databaseUpdateSchemaList = $validator->getUpdateSchemaList();
+		// We'll ignore "DROP TABLE doctrine_migration_versions" since it shouldn't appear here
+		$databaseUpdateSchemaList = array_diff($validator->getUpdateSchemaList(), ["DROP TABLE doctrine_migration_versions"]);
 
 		if (\count($databaseUpdateSchemaList) > 0)
 		{
