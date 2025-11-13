@@ -12,6 +12,7 @@ final readonly class HostingEnvironment
 	 */
 	public function __construct (
 		HostingTier|string $tier,
+		private bool $isDebug,
 		private ?string $installationKey = null,
 	)
 	{
@@ -53,5 +54,14 @@ final readonly class HostingEnvironment
 	public function getInstallationKey () : ?string
 	{
 		return $this->installationKey;
+	}
+
+	/**
+	 * Whether the Symfony debug mode is active. This is separate from the app environment (like `prod` or `dev`) and controls whether extensive debug information is collected.
+	 * This mode is controlled via the `APP_DEBUG` environment variable.
+	 */
+	public function isDebug () : bool
+	{
+		return $this->isDebug;
 	}
 }

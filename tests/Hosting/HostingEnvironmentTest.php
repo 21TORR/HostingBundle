@@ -15,7 +15,7 @@ final class HostingEnvironmentTest extends TestCase
 	 */
 	public function testInstallationKey () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, false, "installation");
 
 		self::assertSame("installation", $environment->getInstallationKey());
 	}
@@ -24,10 +24,10 @@ final class HostingEnvironmentTest extends TestCase
 	 */
 	public function testHostingTierConstructor () : void
 	{
-		$environment = new HostingEnvironment(HostingTier::PRODUCTION, "installation");
+		$environment = new HostingEnvironment(HostingTier::PRODUCTION, false, "installation");
 		self::assertSame(HostingTier::PRODUCTION, $environment->getTier());
 
-		$environment2 = new HostingEnvironment("staging", "installation");
+		$environment2 = new HostingEnvironment("staging", false, "installation");
 		self::assertSame(HostingTier::STAGING, $environment2->getTier());
 	}
 
@@ -49,7 +49,16 @@ final class HostingEnvironmentTest extends TestCase
 	 */
 	public function testHostingTiers (string|HostingTier $value, HostingTier $expected) : void
 	{
-		$environment = new HostingEnvironment($value, "installation");
+		$environment = new HostingEnvironment($value, false, "installation");
 		self::assertSame($expected, $environment->getTier());
+	}
+
+	public function testDebugFlag () : void
+	{
+		$environment = new HostingEnvironment(HostingTier::DEVELOPMENT, false, "installation");
+		self::assertFalse($environment->isDebug());
+
+		$environment2 = new HostingEnvironment(HostingTier::PRODUCTION, true, "other-installation");
+		self::assertTrue($environment2->isDebug());
 	}
 }
