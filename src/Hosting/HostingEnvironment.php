@@ -57,8 +57,8 @@ final readonly class HostingEnvironment
 	}
 
 	/**
-	 * Returns the Symfony Debug variable (%kernel.debug%), which determines whether Symfony
-	 * is currently being executed using the APP_DEBUG=1 environment variable.
+	 * Whether the Symfony debug mode is active. This is separate from the app environment (like `prod` or `dev`) and controls whether extensive debug information is collected. 
+	 * This mode is controlled via the `APP_DEBUG` environment variable.
 	 */
 	public function isDebug () : bool
 	{
