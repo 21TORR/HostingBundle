@@ -17,6 +17,7 @@ services:
     Torr\Hosting\Hosting\HostingEnvironment:
         $tier: !abstract defined via configuration
         $installationKey: !abstract defined via configuration
+        $isDebug: '%kernel.debug%'
 
     Torr\Hosting\BuildInfo\BuildInfoStorage:
         $filePath: '%kernel.project_dir%/.build-info.json'

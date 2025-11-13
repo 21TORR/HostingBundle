@@ -1,3 +1,9 @@
+vNext
+=====
+
+* (feature) `HostingEnvironment` now exposes the `%kernel.debug%` variable as `HostingEnvironment::isDebug()`.
+
+
 4.0.4
 =====
 
