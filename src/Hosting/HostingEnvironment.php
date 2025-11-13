@@ -57,7 +57,7 @@ final readonly class HostingEnvironment
 	}
 
 	/**
-	 * Whether the Symfony debug mode is active. This is separate from the app environment (like `prod` or `dev`) and controls whether extensive debug information is collected. 
+	 * Whether the Symfony debug mode is active. This is separate from the app environment (like `prod` or `dev`) and controls whether extensive debug information is collected.
 	 * This mode is controlled via the `APP_DEBUG` environment variable.
 	 */
 	public function isDebug () : bool
