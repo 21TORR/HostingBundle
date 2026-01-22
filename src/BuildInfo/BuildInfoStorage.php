@@ -3,7 +3,6 @@
 namespace Torr\Hosting\BuildInfo;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Torr\Hosting\Event\CollectBuildInfoEvent;
 use Torr\Hosting\Exception\InvalidBuildInfoException;
@@ -56,6 +55,7 @@ final class BuildInfoStorage
 			// sort info before passing it to build info
 			uksort($data, "strnatcasecmp");
 
+			/** @var array<array-key, string|float|int|bool|null> $data */
 			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
