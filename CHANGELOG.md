@@ -1,3 +1,9 @@
+4.1.1
+=====
+
+* (improvement) Don't store build info in cache.
+
+
 4.1.0
 =====
 

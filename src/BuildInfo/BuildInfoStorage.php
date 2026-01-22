@@ -10,14 +10,13 @@ use Torr\Hosting\Exception\InvalidBuildInfoException;
 
 final class BuildInfoStorage
 {
-	private const CACHE_KEY = "hosting.build-info";
+	private ?BuildInfo $cache = null;
 
 	/**
 	 */
 	public function __construct (
 		private readonly EventDispatcherInterface $dispatcher,
 		private readonly Filesystem $filesystem,
-		private readonly CacheInterface $cache,
 		private readonly string $filePath,
 	) {}
 
@@ -25,10 +24,7 @@ final class BuildInfoStorage
 	 */
 	public function getBuildInfo () : BuildInfo
 	{
-		return $this->cache->get(
-			self::CACHE_KEY,
-			$this->loadBuildInfo(...),
-		);
+		return $this->cache ??= $this->loadBuildInfo();
 	}
 
 	/**
@@ -78,7 +74,7 @@ final class BuildInfoStorage
 	{
 		// remove existing file
 		$this->filesystem->remove($this->filePath);
-		$this->cache->delete(self::CACHE_KEY);
+		$this->cache = null;
 
 		// refetch build info
 		$event = new CollectBuildInfoEvent();
