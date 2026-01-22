@@ -3,21 +3,19 @@
 namespace Torr\Hosting\BuildInfo;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Torr\Hosting\Event\CollectBuildInfoEvent;
 use Torr\Hosting\Exception\InvalidBuildInfoException;
 
 final class BuildInfoStorage
 {
-	private const CACHE_KEY = "hosting.build-info";
+	private ?BuildInfo $cache = null;
 
 	/**
 	 */
 	public function __construct (
 		private readonly EventDispatcherInterface $dispatcher,
 		private readonly Filesystem $filesystem,
-		private readonly CacheInterface $cache,
 		private readonly string $filePath,
 	) {}
 
@@ -25,10 +23,7 @@ final class BuildInfoStorage
 	 */
 	public function getBuildInfo () : BuildInfo
 	{
-		return $this->cache->get(
-			self::CACHE_KEY,
-			$this->loadBuildInfo(...),
-		);
+		return $this->cache ??= $this->loadBuildInfo();
 	}
 
 	/**
@@ -60,6 +55,7 @@ final class BuildInfoStorage
 			// sort info before passing it to build info
 			uksort($data, "strnatcasecmp");
 
+			/** @var array<array-key, string|float|int|bool|null> $data */
 			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
@@ -78,7 +74,7 @@ final class BuildInfoStorage
 	{
 		// remove existing file
 		$this->filesystem->remove($this->filePath);
-		$this->cache->delete(self::CACHE_KEY);
+		$this->cache = null;
 
 		// refetch build info
 		$event = new CollectBuildInfoEvent();

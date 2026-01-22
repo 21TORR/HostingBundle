@@ -2,6 +2,7 @@
 
 namespace Tests\Torr\Hosting\Hosting;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Torr\Hosting\Hosting\HostingEnvironment;
 use Torr\Hosting\Tier\HostingTier;
@@ -45,8 +46,8 @@ final class HostingEnvironmentTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider provideHostingTiers
 	 */
+	#[DataProvider("provideHostingTiers")]
 	public function testHostingTiers (string|HostingTier $value, HostingTier $expected) : void
 	{
 		$environment = new HostingEnvironment($value, false, "installation");

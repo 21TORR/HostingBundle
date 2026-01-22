@@ -11,31 +11,31 @@
 	],
 	"homepage": "https://github.com/21TORR/hosting-bundle",
 	"require": {
-		"php": ">= 8.3",
+		"php": ">= 8.4",
 		"ext-ctype": "*",
 		"ext-intl": "*",
 		"ext-json": "*",
 		"ext-mbstring": "*",
-		"21torr/bundle-helpers": "^2.2",
-		"21torr/cli": "^1.2.3",
+		"21torr/bundle-helpers": "^2.3.1",
+		"21torr/cli": "^1.2.4",
 		"psr/log": "^3.0",
-		"symfony/cache": "^7.1",
-		"symfony/cache-contracts": "^3.5",
-		"symfony/clock": "^7.1",
-		"symfony/config": "^7.1",
-		"symfony/console": "^7.1",
-		"symfony/dependency-injection": "^7.1",
-		"symfony/event-dispatcher-contracts": "^3.5",
-		"symfony/filesystem": "^7.1",
-		"symfony/framework-bundle": "^7.1",
-		"symfony/process": "^7.1"
+		"symfony/cache": "^7.4 || ^8.0",
+		"symfony/cache-contracts": "^3.6",
+		"symfony/clock": "^7.4 || ^8.0",
+		"symfony/config": "^7.4 || ^8.0",
+		"symfony/console": "^7.4 || ^8.0",
+		"symfony/dependency-injection": "^7.4 || ^8.0",
+		"symfony/event-dispatcher-contracts": "^3.6",
+		"symfony/filesystem": "^7.4 || ^8.0",
+		"symfony/framework-bundle": "^7.4 || ^8.0",
+		"symfony/process": "^7.4 || ^8.0"
 	},
 	"require-dev": {
-		"21torr/janus": "^1.4",
-		"bamarni/composer-bin-plugin": "^1.8",
-		"doctrine/orm": "^3.0",
-		"roave/security-advisories": "dev-latest",
-		"symfony/phpunit-bridge": "^7.1"
+		"21torr/janus": "^2.0.2",
+		"bamarni/composer-bin-plugin": "^1.8.2",
+		"doctrine/orm": "^3.6",
+		"phpunit/phpunit": "^12.5",
+		"roave/security-advisories": "dev-latest"
 	},
 	"replace": {
 		"symfony/polyfill-ctype": "*",
@@ -54,7 +54,8 @@
 		"symfony/polyfill-php80": "*",
 		"symfony/polyfill-php81": "*",
 		"symfony/polyfill-php82": "*",
-		"symfony/polyfill-php83": "*"
+		"symfony/polyfill-php83": "*",
+		"symfony/polyfill-php84": "*"
 	},
 	"suggest": {
 		"doctrine/orm": "For automatic integration of health checks"
@@ -71,6 +72,7 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"21torr/janus": true,
 			"bamarni/composer-bin-plugin": true
 		},
 		"sort-packages": true
@@ -88,14 +90,14 @@
 	"scripts": {
 		"fix-lint": [
 			"@composer bin c-norm normalize \"$(pwd)/composer.json\" --indent-style tab --indent-size 1 --ansi",
-			"vendor-bin/cs-fixer/vendor/bin/php-cs-fixer fix --diff --config vendor-bin/cs-fixer/vendor/21torr/php-cs-fixer/.php-cs-fixer.dist.php --no-interaction --ansi"
+			"vendor-bin/cs-fixer/vendor/bin/php-cs-fixer fix --diff --config vendor-bin/cs-fixer/vendor/21torr/php-cs-fixer/.php-cs-fixer.dist.php --allow-unsupported-php-version=yes --no-interaction --ansi"
 		],
 		"lint": [
 			"@composer bin c-norm normalize \"$(pwd)/composer.json\" --indent-style tab --indent-size 1 --dry-run --ansi",
-			"vendor-bin/cs-fixer/vendor/bin/php-cs-fixer check --diff --config vendor-bin/cs-fixer/vendor/21torr/php-cs-fixer/.php-cs-fixer.dist.php --no-interaction --ansi"
+			"vendor-bin/cs-fixer/vendor/bin/php-cs-fixer check --diff --config vendor-bin/cs-fixer/vendor/21torr/php-cs-fixer/.php-cs-fixer.dist.php --allow-unsupported-php-version=yes --no-interaction --ansi"
 		],
 		"test": [
-			"simple-phpunit",
+			"phpunit",
 			"vendor-bin/phpstan/vendor/bin/phpstan analyze -c phpstan.neon . --ansi -v"
 		]
 	}

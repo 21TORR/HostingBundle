@@ -20,8 +20,7 @@ readonly class ValidateAppListener
 	public function onValidateApp (ValidateAppEvent $event) : void
 	{
 		// Technically this can't happen, as we can't set anything besides the
-		// correct type as tier. However we want to force parsing of the hosting tier,
-		// so that we catch invalid tiers.
+		// correct type as tier. However, we want to force parsing of the hosting tier so that we catch invalid tier values.
 		// @phpstan-ignore-next-line instanceof.alwaysTrue (this is a dummy check, please read above for the explanation)
 		if (!$this->environment->getTier() instanceof HostingTier)
 		{

@@ -2,6 +2,7 @@
 
 namespace Tests\Torr\Hosting\BuildInfo;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -31,8 +32,8 @@ final class BuildInfoTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider provideBuildInfoGitIntegration
 	 */
+	#[DataProvider("provideBuildInfoGitIntegration")]
 	public function testBuildInfoGitIntegration (?array $data, array $expected) : void
 	{
 		$versionFetcher = $this->createMock(GitVersionFetcher::class);

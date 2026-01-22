@@ -1,3 +1,11 @@
+4.1.1
+=====
+
+* (improvement) Don't store build info in cache.
+* (improvement) Bump dependencies.
+* (improvement) Require PHP 8.4+
+
+
 4.1.0
 =====
 
