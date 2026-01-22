@@ -17,7 +17,7 @@
 		"ext-json": "*",
 		"ext-mbstring": "*",
 		"21torr/bundle-helpers": "^2.2",
-		"21torr/cli": "^1.2.3",
+		"21torr/cli": "^1.2.4",
 		"psr/log": "^3.0",
 		"symfony/cache": "^7.1",
 		"symfony/cache-contracts": "^3.5",
