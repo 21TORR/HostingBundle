@@ -2,6 +2,7 @@
 =====
 
 * (improvement) Don't store build info in cache.
+* (improvement) Bump dependencies.
 
 
 4.1.0
