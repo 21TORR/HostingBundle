@@ -1,3 +1,9 @@
+4.1.2
+=====
+
+* (improvement) Explicitly list versions of replaced packages.
+
+
 4.1.1
 =====
 
