@@ -21,9 +21,3 @@ services:
 
     Torr\Hosting\BuildInfo\BuildInfoStorage:
         $filePath: '%kernel.project_dir%/.build-info.json'
-
-    Torr\Hosting\Deployment\Task\ResetBuildInfoTask:
-        tags:
-            - name: hosting.task.post-build
-              # should run at first
-              priority: 10000

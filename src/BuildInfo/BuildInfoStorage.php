@@ -53,7 +53,7 @@ final class BuildInfoStorage
 			}
 
 			// sort info before passing it to build info
-			uksort($data, "strnatcasecmp");
+			uksort($data, strnatcasecmp(...));
 
 			/** @var array<array-key, string|float|int|bool|null> $data */
 			return new BuildInfo($data);
@@ -82,7 +82,7 @@ final class BuildInfoStorage
 
 		// write the data sorted into the JSON, makes debugging easier
 		$info = $event->getInfo();
-		uksort($info, "strnatcasecmp");
+		uksort($info, strnatcasecmp(...));
 
 		try
 		{

@@ -1,3 +1,10 @@
+4.2.0
+=====
+
+* (feature) Add `init` hook.
+* (improvement) Require PHP 8.5+ and Symfony 8.0+
+
+
 4.1.2
 =====
 

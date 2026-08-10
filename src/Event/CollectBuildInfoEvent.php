@@ -6,6 +6,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class CollectBuildInfoEvent extends Event
 {
+	/** @var array<array-key, string|float|int|bool|null> */
 	private array $info = [];
 
 	/**

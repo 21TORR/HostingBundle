@@ -7,9 +7,6 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Torr\BundleHelpers\Bundle\ConfigurableBundleExtension;
 use Torr\Hosting\DependencyInjection\HostingBundleConfiguration;
-use Torr\Hosting\Deployment\BuildHookInterface;
-use Torr\Hosting\Deployment\DeployHookInterface;
-use Torr\Hosting\Deployment\HookRunners;
 use Torr\Hosting\Hosting\HostingEnvironment;
 
 final class HostingBundle extends Bundle
@@ -29,18 +26,6 @@ final class HostingBundle extends Bundle
 					->setArgument('$installationKey', $config["installation"]);
 			},
 		);
-	}
-
-	/**
-	 */
-	#[\Override]
-	public function build(ContainerBuilder $container) : void
-	{
-		$container->registerForAutoconfiguration(BuildHookInterface::class)
-			->addTag(HookRunners::TAG_BUILD_HOOK);
-
-		$container->registerForAutoconfiguration(DeployHookInterface::class)
-			->addTag(HookRunners::TAG_DEPLOY_HOOK);
 	}
 
 	/**

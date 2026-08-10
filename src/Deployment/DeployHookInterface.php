@@ -2,6 +2,9 @@
 
 namespace Torr\Hosting\Deployment;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag(HookRunners::TAG_DEPLOY_HOOK)]
 interface DeployHookInterface
 {
 	/**
