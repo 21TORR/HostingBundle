@@ -1,3 +1,11 @@
+4.2.1
+=====
+
+* (improvement) Rename `DeployHookInterface` to `DeployContainerHookInterface`.
+* (deprecate) Deprecate `DeployHookInterface`.
+* (internal) Add tests for hook management.
+
+
 4.2.0
 =====
 
