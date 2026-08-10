@@ -2,7 +2,7 @@
 =====
 
 * (improvement) Rename `DeployHookInterface` to `DeployContainerHookInterface`.
-* (deprecate) Deprecate `DeployHookInterface`.
+* (deprecation) Deprecate `DeployHookInterface`.
 * (internal) Add tests for hook management.
 
 
