@@ -35,3 +35,8 @@ parameters:
 			identifier: method.deprecatedInterface
 			path: src/Deployment/HookRunners.php
 			count: 1
+		-
+			message: '#Access to constant on deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: classConstant.deprecatedInterface
+			path: tests/Deployment/HookRunnersTest.php
+			count: 2
