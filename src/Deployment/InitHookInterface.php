@@ -13,7 +13,7 @@ interface InitHookInterface
 	public function getLabel () : string;
 
 	/**
-	 * Runs the post initialization hook
+	 * Runs the app initialization hook
 	 */
-	public function runPostInit (TaskCli $io) : void;
+	public function runInit (TaskCli $io) : void;
 }

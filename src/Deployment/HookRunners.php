@@ -86,7 +86,7 @@ final readonly class HookRunners
 			}
 
 			$io->section("Run Init Hook: <fg=magenta>{$runner->getLabel()}</>");
-			$runner->runPostInit($io);
+			$runner->runInit($io);
 		}
 	}
 }
