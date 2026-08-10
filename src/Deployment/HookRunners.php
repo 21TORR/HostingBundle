@@ -7,8 +7,8 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 final readonly class HookRunners
 {
 	public const string TAG_BUILD_HOOK = "hosting.hook.build";
-	public const string TAG_DEPLOY_HOOK = "hosting.hook.deploy";
-	public const string TAG_INIT_HOOK = "hosting.hook.init";
+	public const string TAG_DEPLOY_CONTAINER_HOOK = "hosting.hook.deploy-container";
+	public const string TAG_DEPLOY_APP_HOOK = "hosting.hook.deploy-app";
 
 	/**
 	 */
@@ -16,12 +16,12 @@ final readonly class HookRunners
 		/** @var BuildHookInterface[] */
 		#[AutowireIterator(tag: self::TAG_BUILD_HOOK)]
 		private iterable $buildHooks,
-		/** @var DeployHookInterface[] */
-		#[AutowireIterator(tag: self::TAG_DEPLOY_HOOK)]
-		private iterable $deployHooks,
-		/** @var InitHookInterface[] */
-		#[AutowireIterator(tag: self::TAG_INIT_HOOK)]
-		private iterable $initHooks,
+		/** @var list<DeployContainerHookInterface|DeployHookInterface> */
+		#[AutowireIterator(tag: self::TAG_DEPLOY_CONTAINER_HOOK)]
+		private iterable $deployContainerHooks,
+		/** @var DeployAppHookInterface[] */
+		#[AutowireIterator(tag: self::TAG_DEPLOY_APP_HOOK)]
+		private iterable $deployAppHooks,
 	) {}
 
 	/**
@@ -48,11 +48,11 @@ final readonly class HookRunners
 
 	/**
 	 */
-	public function runDeployHooks (TaskCli $io) : void
+	public function runDeployContainerHooks (TaskCli $io) : void
 	{
 		$first = true;
 
-		foreach ($this->deployHooks as $runner)
+		foreach ($this->deployContainerHooks as $runner)
 		{
 			if ($first)
 			{
@@ -63,18 +63,34 @@ final readonly class HookRunners
 				$io->newLine(2);
 			}
 
-			$io->section("Run Deploy Hook: <fg=magenta>{$runner->getLabel()}</>");
-			$runner->runPostDeployment($io);
+			$io->section("Run Deploy Container Hook: <fg=magenta>{$runner->getLabel()}</>");
+
+			if ($runner instanceof DeployHookInterface)
+			{
+				trigger_deprecation(
+					"21torr/hosting",
+					"4.2.1",
+					\sprintf(
+						"Using 'deploy hooks' is deprecated, use 'DeployContainerHook' instead. Used in '%s'",
+						$runner::class,
+					),
+				);
+
+				$runner->runPostDeployment($io);
+				continue;
+			}
+
+			$runner->runDeployContainer($io);
 		}
 	}
 
 	/**
 	 */
-	public function runInitHooks (TaskCli $io) : void
+	public function runDeployAppHooks (TaskCli $io) : void
 	{
 		$first = true;
 
-		foreach ($this->initHooks as $runner)
+		foreach ($this->deployAppHooks as $runner)
 		{
 			if ($first)
 			{
@@ -85,8 +101,8 @@ final readonly class HookRunners
 				$io->newLine(2);
 			}
 
-			$io->section("Run Init Hook: <fg=magenta>{$runner->getLabel()}</>");
-			$runner->runInit($io);
+			$io->section("Run Deploy App Hook: <fg=magenta>{$runner->getLabel()}</>");
+			$runner->runDeployApp($io);
 		}
 	}
 }

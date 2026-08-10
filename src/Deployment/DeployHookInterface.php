@@ -4,7 +4,10 @@ namespace Torr\Hosting\Deployment;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
-#[AutoconfigureTag(HookRunners::TAG_DEPLOY_HOOK)]
+/**
+ * @deprecated Migrate to {@see DeployContainerHookInterface}
+ */
+#[AutoconfigureTag(HookRunners::TAG_DEPLOY_CONTAINER_HOOK)]
 interface DeployHookInterface
 {
 	/**
@@ -13,7 +16,7 @@ interface DeployHookInterface
 	public function getLabel () : string;
 
 	/**
-	 * Runs the post deployment hook
+	 * Runs the post (container) deployment hook
 	 */
 	public function runPostDeployment (TaskCli $io) : void;
 }

@@ -1,3 +1,9 @@
+4.x to 5.0
+==========
+
+* Interface `DeployHookInterface` was removed, use `DeployContainerHookInterface` instead.
+
+
 3.x to 4.0
 ==========
 

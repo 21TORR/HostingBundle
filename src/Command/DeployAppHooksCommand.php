@@ -10,10 +10,10 @@ use Torr\Hosting\Deployment\HookRunners;
 use Torr\Hosting\Deployment\TaskCli;
 
 #[AsCommand(
-	"hosting:hook:init",
-	description: "Runs the hooks for 'initialize the app'",
+	"hosting:hook:deploy-app",
+	description: "Runs the hooks for deploying a complete application.",
 )]
-final class InitHooksCommand extends Command
+final class DeployAppHooksCommand extends Command
 {
 	/**
 	 */
@@ -30,12 +30,12 @@ final class InitHooksCommand extends Command
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);
-		$io->title("Run Init Hooks");
+		$io->title("Run Deploy App Hooks");
 
-		$this->runners->runInitHooks($io);
+		$this->runners->runDeployAppHooks($io);
 
 		$io->newLine();
-		$io->success("Ran all init hooks.");
+		$io->success("Ran all deploy app hooks.");
 
 		return 0;
 	}
