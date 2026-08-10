@@ -40,3 +40,13 @@ parameters:
 			identifier: classConstant.deprecatedInterface
 			path: tests/Deployment/HookRunnersTest.php
 			count: 2
+		-
+			message: '#Access to constant on deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: classConstant.deprecatedInterface
+			path: tests/Deployment/HookRunnersAutoconfigurationTest.php
+			count: 1
+		-
+			message: '#Class Tests\\Torr\\Hosting\\Deployment\\Fixtures\\FixtureLegacyDeployHook implements deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: class.implementsDeprecatedInterface
+			path: tests/Deployment/Fixtures/FixtureLegacyDeployHook.php
+			count: 1
