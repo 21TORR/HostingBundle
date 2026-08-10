@@ -8,6 +8,7 @@ final readonly class HookRunners
 {
 	public const string TAG_BUILD_HOOK = "hosting.hook.build";
 	public const string TAG_DEPLOY_HOOK = "hosting.hook.deploy";
+	public const string TAG_INIT_HOOK = "hosting.hook.init";
 
 	/**
 	 */
@@ -18,6 +19,9 @@ final readonly class HookRunners
 		/** @var DeployHookInterface[] */
 		#[AutowireIterator(tag: self::TAG_DEPLOY_HOOK)]
 		private iterable $deployHooks,
+		/** @var InitHookInterface[] */
+		#[AutowireIterator(tag: self::TAG_INIT_HOOK)]
+		private iterable $initHooks,
 	) {}
 
 	/**
@@ -61,6 +65,28 @@ final readonly class HookRunners
 
 			$io->section("Run Deploy Hook: <fg=magenta>{$runner->getLabel()}</>");
 			$runner->runPostDeployment($io);
+		}
+	}
+
+	/**
+	 */
+	public function runInitHooks (TaskCli $io) : void
+	{
+		$first = true;
+
+		foreach ($this->initHooks as $runner)
+		{
+			if ($first)
+			{
+				$first = false;
+			}
+			else
+			{
+				$io->newLine(2);
+			}
+
+			$io->section("Run Init Hook: <fg=magenta>{$runner->getLabel()}</>");
+			$runner->runPostInit($io);
 		}
 	}
 }
