@@ -83,8 +83,8 @@ final class HookRunnersAutoconfigurationTest extends TestCase
 			array_keys($container->findTaggedServiceIds(HookRunners::TAG_DEPLOY_CONTAINER_HOOK)),
 		);
 
-		/** @var HookRunners $runners */
 		$runners = $container->get(HookRunners::class);
+		\assert($runners instanceof HookRunners);
 
 		// the #[AutowireIterator] on HookRunners' constructor must actually receive those tagged services
 		self::assertSame(
@@ -105,7 +105,7 @@ final class HookRunnersAutoconfigurationTest extends TestCase
 	}
 
 	/**
-	 * @return array<object>
+	 * @return list<object>
 	 */
 	private function readHookRunnersProperty (HookRunners $runners, string $property) : array
 	{
@@ -113,14 +113,16 @@ final class HookRunnersAutoconfigurationTest extends TestCase
 			->getValue($runners);
 		$items = \is_array($value) ? $value : iterator_to_array($value, false);
 
-		return array_map(
-			static function (mixed $item) : object
-			{
-				self::assertIsObject($item);
+		return array_values(
+			array_map(
+				static function (mixed $item) : object
+				{
+					self::assertIsObject($item);
 
-				return $item;
-			},
-			$items,
+					return $item;
+				},
+				$items,
+			),
 		);
 	}
 }
