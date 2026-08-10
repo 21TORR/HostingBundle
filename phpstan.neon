@@ -17,3 +17,21 @@ parameters:
 			- node_modules (?)
 			- var (?)
 			- vendor-bin
+
+	ignoreErrors:
+		# @todo remove these ignores in 5.x
+		-
+			message: '#Parameter \$deployContainerHooks of method (.*?) deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: parameter.deprecatedInterface
+			path: src/Deployment/HookRunners.php
+			count: 1
+		-
+			message: '#Call to method getLabel\(\) of deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: method.deprecatedInterface
+			path: src/Deployment/HookRunners.php
+			count: 1
+		-
+			message: '#Call to method runPostDeployment\(\) of deprecated interface Torr\\Hosting\\Deployment\\DeployHookInterface:#'
+			identifier: method.deprecatedInterface
+			path: src/Deployment/HookRunners.php
+			count: 1

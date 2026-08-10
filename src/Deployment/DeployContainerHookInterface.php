@@ -4,8 +4,8 @@ namespace Torr\Hosting\Deployment;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
-#[AutoconfigureTag(HookRunners::TAG_INIT_HOOK)]
-interface InitHookInterface
+#[AutoconfigureTag(HookRunners::TAG_DEPLOY_CONTAINER_HOOK)]
+interface DeployContainerHookInterface
 {
 	/**
 	 * Returns the label of the hook
@@ -13,7 +13,7 @@ interface InitHookInterface
 	public function getLabel () : string;
 
 	/**
-	 * Runs the app initialization hook
+	 * Runs the post container deployment hook
 	 */
-	public function runInit (TaskCli $io) : void;
+	public function runDeployContainer (TaskCli $io) : void;
 }
