@@ -32,6 +32,7 @@ class ValidateAppCommand extends Command
 
 	/**
 	 */
+	#[\Override]
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TorrStyle($input, $output);

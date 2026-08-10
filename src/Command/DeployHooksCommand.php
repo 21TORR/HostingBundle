@@ -15,18 +15,18 @@ use Torr\Hosting\Deployment\TaskCli;
 )]
 final class DeployHooksCommand extends Command
 {
-	private HookRunners $runners;
-
 	/**
 	 */
-	public function __construct (HookRunners $runners)
+	public function __construct (
+		private readonly HookRunners $runners,
+	)
 	{
 		parent::__construct();
-		$this->runners = $runners;
 	}
 
 	/**
 	 */
+	#[\Override]
 	protected function execute (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);

@@ -2,6 +2,7 @@
 
 namespace Torr\Hosting\Deployment\Task;
 
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 use Torr\Hosting\BuildInfo\BuildInfoStorage;
 use Torr\Hosting\Deployment\BuildHookInterface;
 use Torr\Hosting\Deployment\TaskCli;
@@ -9,6 +10,7 @@ use Torr\Hosting\Deployment\TaskCli;
 /**
  * Refreshes the build info. Should run as the first task.
  */
+#[AsTaggedItem(priority: 10000)]
 final readonly class ResetBuildInfoTask implements BuildHookInterface
 {
 	/**

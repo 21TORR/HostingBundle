@@ -15,14 +15,13 @@ use Torr\Hosting\Deployment\TaskCli;
 )]
 final class BuildHooksCommand extends Command
 {
-	private HookRunners $runners;
-
 	/**
 	 */
-	public function __construct (HookRunners $runners)
+	public function __construct (
+		private readonly HookRunners $runners,
+	)
 	{
 		parent::__construct();
-		$this->runners = $runners;
 	}
 
 	/**
