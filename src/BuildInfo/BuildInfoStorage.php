@@ -10,7 +10,7 @@ use Torr\Hosting\Exception\InvalidBuildInfoException;
 
 final class BuildInfoStorage
 {
-	private const CACHE_KEY = "hosting.build-info";
+	private const string CACHE_KEY = "hosting.build-info";
 
 	/**
 	 */
@@ -60,6 +60,7 @@ final class BuildInfoStorage
 			// sort info before passing it to build info
 			uksort($data, "strnatcasecmp");
 
+			/** @var array<array-key, string|float|int|bool|null> $data */
 			return new BuildInfo($data);
 		}
 		catch (\JsonException $exception)
