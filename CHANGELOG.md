@@ -2,6 +2,7 @@
 =====
 
 * (improvement) Tag explicit Polyfill versions to prevent conflicts with latest `roave/security-advisories`
+* (improvement) Require PHP 8.5+
 
 
 3.2.2
