@@ -56,7 +56,10 @@ final class CommandExecutionTest extends TestCase
 
 		$display = $tester->getDisplay();
 		self::assertStringContainsString("Ran all deploy container hooks.", $display);
-		self::assertStringNotContainsString("all other names are deprecated", $display);
+
+		// don't assert on the full sentence here: the caution block is word-wrapped, so any
+		// substring spanning the wrap point would never match — not even when the warning is shown.
+		self::assertStringNotContainsString("other names are deprecated", $display);
 	}
 
 	/**
