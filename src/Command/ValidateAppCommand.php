@@ -11,14 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Torr\Cli\Console\Style\TorrStyle;
 use Torr\Hosting\Event\ValidateAppEvent;
 
-/**
- * @final
- */
 #[AsCommand(
 	"hosting:validate-app",
 	description: "Validates the app configuration, for usage in the CI before deployment",
 )]
-readonly class ValidateAppCommand
+final readonly class ValidateAppCommand
 {
 	/**
 	 */
