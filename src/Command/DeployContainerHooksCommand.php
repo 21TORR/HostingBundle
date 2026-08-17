@@ -26,12 +26,14 @@ final readonly class DeployContainerHooksCommand
 
 	/**
 	 */
-	public function __invoke (InputInterface $input, OutputInterface $output) : int
+	public function __invoke (InputInterface $input, OutputInterface $output, Command $command) : int
 	{
 		$io = new TaskCli($input, $output);
 		$io->title("Run Deploy Container Hooks");
 
-		if ("hosting:hook:deploy-container" !== $input->getFirstArgument())
+		// only warn for the deprecated aliases: the raw input may also be an abbreviation of the
+		// canonical name or missing entirely, if the command was run programmatically.
+		if (\in_array($input->getFirstArgument(), $command->getAliases(), true))
 		{
 			$io->caution("Always call this command with `hosting:hook:deploy-container`, all other names are deprecated.");
 

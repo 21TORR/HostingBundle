@@ -76,6 +76,20 @@ final class CommandExecutionTest extends TestCase
 	}
 
 	/**
+	 * An abbreviation of the canonical name is not a deprecated alias, so it must not warn.
+	 */
+	public function testDeployContainerHooksCommandDoesNotWarnAboutAbbreviations () : void
+	{
+		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [])));
+
+		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:deploy-cont"]));
+
+		$display = $tester->getDisplay();
+		self::assertStringContainsString("Ran all deploy container hooks.", $display);
+		self::assertStringNotContainsString("other names are deprecated", $display);
+	}
+
+	/**
 	 */
 	public function testShowBuildInfoCommand () : void
 	{
