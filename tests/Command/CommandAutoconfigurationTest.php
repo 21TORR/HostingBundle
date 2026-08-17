@@ -3,16 +3,18 @@
 namespace Tests\Torr\Hosting\Command;
 
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
-use Symfony\Component\DependencyInjection\ChildDefinition;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
+use Symfony\Component\Console\ConsoleBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Torr\Hosting\Command\BuildHooksCommand;
-use Torr\Hosting\Command\DeployAppHooksCommand;
-use Torr\Hosting\Command\DeployContainerHooksCommand;
-use Torr\Hosting\Command\ShowBuildInfoCommand;
-use Torr\Hosting\Command\ValidateAppCommand;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Torr\Hosting\BuildInfo\BuildInfoStorage;
+use Torr\Hosting\Deployment\HookRunners;
 
 /**
  * Verifies that all commands are still registered as console commands with their names, aliases
@@ -23,30 +25,27 @@ use Torr\Hosting\Command\ValidateAppCommand;
  */
 final class CommandAutoconfigurationTest extends TestCase
 {
-	private const array COMMANDS = [
-		BuildHooksCommand::class,
-		DeployAppHooksCommand::class,
-		DeployContainerHooksCommand::class,
-		ShowBuildInfoCommand::class,
-		ValidateAppCommand::class,
-	];
-
 	/**
 	 */
 	public function testAllCommandsAreRegisteredWithTheirNamesAndAliases () : void
 	{
-		$container = $this->compileContainer();
+		$loader = $this->compileCommandLoader();
 
-		self::assertEquals(
+		self::assertEqualsCanonicalizing(
 			[
-				"hosting:hook:build" => BuildHooksCommand::class . ".command",
-				"hosting:hook:deploy-app" => DeployAppHooksCommand::class . ".command",
-				"hosting:hook:deploy-container" => DeployContainerHooksCommand::class . ".command",
-				"hosting:hook:deploy" => DeployContainerHooksCommand::class . ".command",
-				"hosting:build:info" => ShowBuildInfoCommand::class . ".command",
-				"hosting:validate-app" => ValidateAppCommand::class . ".command",
+				"hosting:hook:build",
+				"hosting:hook:deploy-app",
+				"hosting:hook:deploy-container",
+				"hosting:hook:deploy",
+				"hosting:build:info",
+				"hosting:validate-app",
 			],
-			$container->getDefinition("console.command_loader")->getArgument(1),
+			$loader->getNames(),
+		);
+
+		self::assertSame(
+			["hosting:hook:deploy"],
+			$loader->get("hosting:hook:deploy-container")->getAliases(),
 		);
 	}
 
@@ -55,58 +54,124 @@ final class CommandAutoconfigurationTest extends TestCase
 	 */
 	public function testAllCommandsHaveADescription () : void
 	{
-		$container = $this->compileContainer();
+		$loader = $this->compileCommandLoader();
 		$descriptions = [];
 
-		foreach (self::COMMANDS as $class)
+		foreach ($loader->getNames() as $name)
 		{
-			// the lazy definition is only registered if the command has a description
-			$lazyDefinition = $container->getDefinition(\sprintf(".%s.command.lazy", $class));
-			$descriptions[$class] = $lazyDefinition->getArgument(2);
+			$descriptions[$name] = $loader->get($name)->getDescription();
 		}
 
 		self::assertSame(
 			[
-				BuildHooksCommand::class => "Runs the hooks for 'after the build finished'",
-				DeployAppHooksCommand::class => "Runs the hooks for deploying a complete application.",
-				DeployContainerHooksCommand::class => "Runs the hooks for deploying a single container",
-				ShowBuildInfoCommand::class => "Shows the current build info",
-				ValidateAppCommand::class => "Validates the app configuration, for usage in the CI before deployment",
+				"hosting:hook:build" => "Runs the hooks for 'after the build finished'",
+				"hosting:hook:deploy-app" => "Runs the hooks for deploying a complete application.",
+				"hosting:hook:deploy-container" => "Runs the hooks for deploying a single container",
+				"hosting:hook:deploy" => "Runs the hooks for deploying a single container",
+				"hosting:build:info" => "Shows the current build info",
+				"hosting:validate-app" => "Validates the app configuration, for usage in the CI before deployment",
 			],
 			$descriptions,
 		);
 	}
 
 	/**
-	 * Compiles a container that registers the commands the same way the bundle's `config/services.yaml`
-	 * does (autoconfigured via the `src/*` resource glob), combined with the `#[AsCommand]`
-	 * autoconfiguration + compiler pass of `Symfony\Component\Console\ConsoleBundle`.
+	 * Guards against a newly added command that is missing its `#[AsCommand]` attribute, and
+	 * therefore silently wouldn't be registered at all.
 	 */
-	private function compileContainer () : ContainerBuilder
+	public function testEveryCommandClassIsRegistered () : void
+	{
+		$loader = $this->compileCommandLoader();
+
+		foreach ($this->findCommandClasses() as $class)
+		{
+			$attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class)[0] ?? null;
+
+			self::assertNotNull($attribute, \sprintf("%s must have an #[AsCommand] attribute", $class));
+
+			// aliases and the hidden flag are folded into the name, separated by "|"
+			$name = explode("|", $attribute->newInstance()->name)[0];
+
+			self::assertTrue($loader->has($name), \sprintf("%s must be registered as `%s`", $class, $name));
+		}
+	}
+
+	/**
+	 * Compiles the command loader of a container that registers the commands the same way the
+	 * bundle's `config/services.yaml` does (autoconfigured via the `src/*` resource glob), using
+	 * the real compiler passes of `Symfony\Component\Console\ConsoleBundle`.
+	 *
+	 * The `console.command` tag is intentionally left bare: `AddConsoleCommandPass` reads the
+	 * name, aliases and description from the `#[AsCommand]` attribute itself, so this asserts
+	 * against the actual attributes instead of a copy of the bundle's autoconfiguration.
+	 */
+	private function compileCommandLoader () : CommandLoaderInterface
 	{
 		$container = new ContainerBuilder();
+		new ConsoleBundle()->build($container);
 
-		$container->registerAttributeForAutoconfiguration(
-			AsCommand::class,
-			static function (ChildDefinition $definition, AsCommand $attribute) : void
-			{
-				$definition->addTag("console.command", [
-					"command" => $attribute->name,
-					"description" => $attribute->description,
-					"help" => $attribute->help,
-				]);
-			},
-		);
-		$container->addCompilerPass(new AddConsoleCommandPass(), PassConfig::TYPE_BEFORE_REMOVING);
+		$this->registerCommandDependencies($container);
 
-		foreach (self::COMMANDS as $class)
+		foreach ($this->findCommandClasses() as $class)
 		{
 			$container->register($class)
-				->setAutoconfigured(true);
+				->setAutowired(true)
+				->addTag("console.command");
 		}
 
 		$container->compile();
 
-		return $container;
+		$loader = $container->get("console.command_loader");
+		\assert($loader instanceof CommandLoaderInterface);
+
+		return $loader;
+	}
+
+	/**
+	 * Registers everything the commands autowire, so that the loader can actually build them.
+	 * A command without a description isn't wrapped in a `LazyCommand`, so it gets instantiated
+	 * as soon as it is fetched from the loader.
+	 */
+	private function registerCommandDependencies (ContainerBuilder $container) : void
+	{
+		$container->register(EventDispatcher::class);
+		$container->register(NullLogger::class);
+		$container->register(Filesystem::class);
+		$container->setAlias(PsrEventDispatcherInterface::class, EventDispatcher::class);
+		$container->setAlias(EventDispatcherInterface::class, EventDispatcher::class);
+		$container->setAlias(LoggerInterface::class, NullLogger::class);
+
+		$container->register(HookRunners::class)
+			->setAutowired(true);
+
+		$container->register(BuildInfoStorage::class)
+			->setAutowired(true)
+			->setArgument('$filePath', __DIR__ . "/this-file-does-not-exist.json");
+	}
+
+	/**
+	 * @return list<class-string>
+	 */
+	private function findCommandClasses () : array
+	{
+		$files = glob(__DIR__ . "/../../src/Command/*.php");
+		self::assertNotFalse($files);
+
+		$classes = array_map(
+			static function (string $file) : string
+			{
+				/** @var class-string $class */
+				$class = "Torr\\Hosting\\Command\\" . basename($file, ".php");
+
+				self::assertTrue(class_exists($class), \sprintf("Class %s must exist", $class));
+
+				return $class;
+			},
+			$files,
+		);
+
+		self::assertNotEmpty($classes);
+
+		return array_values($classes);
 	}
 }
