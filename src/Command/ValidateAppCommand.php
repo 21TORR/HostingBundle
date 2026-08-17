@@ -18,22 +18,18 @@ use Torr\Hosting\Event\ValidateAppEvent;
 	"hosting:validate-app",
 	description: "Validates the app configuration, for usage in the CI before deployment",
 )]
-class ValidateAppCommand extends Command
+readonly class ValidateAppCommand
 {
 	/**
 	 */
 	public function __construct (
-		private readonly EventDispatcherInterface $dispatcher,
-		private readonly LoggerInterface $logger,
-	)
-	{
-		parent::__construct();
-	}
+		private EventDispatcherInterface $dispatcher,
+		private LoggerInterface $logger,
+	) {}
 
 	/**
 	 */
-	#[\Override]
-	protected function execute (InputInterface $input, OutputInterface $output) : int
+	public function __invoke (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TorrStyle($input, $output);
 		$io->title("Hosting: Validate App");
@@ -59,11 +55,11 @@ class ValidateAppCommand extends Command
 				$failedCheck,
 			));
 
-			return self::FAILURE;
+			return Command::FAILURE;
 		}
 
 		$io->success("App is valid");
 
-		return self::SUCCESS;
+		return Command::SUCCESS;
 	}
 }
