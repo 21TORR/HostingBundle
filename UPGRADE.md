@@ -4,7 +4,7 @@
 * Interface `DeployHookInterface` was removed, use `DeployContainerHookInterface` instead.
 
 
-4.2 to 4.3
+4.x to 4.3
 ==========
 
 * All commands are invokable classes now and no longer extend `Command`. Command names and aliases are unchanged, but `instanceof` checks against the command classes and calls to the inherited `Command` API no longer work.
