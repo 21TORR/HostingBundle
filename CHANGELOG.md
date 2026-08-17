@@ -1,3 +1,9 @@
+3.2.3
+=====
+
+* (improvement) Tag explicit Polyfill versions to prevent conflicts with latest `roave/security-advisories`
+
+
 3.2.2
 =====
 
