@@ -1,3 +1,11 @@
+4.3.0
+=====
+
+* (bc) Commands no longer extend `Command`.
+* (improvement) Refactor all commands to new invokable commands.
+* (internal) Add tests for command registration + execution.
+
+
 4.2.1
 =====
 

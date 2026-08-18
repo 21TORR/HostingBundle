@@ -13,21 +13,17 @@ use Torr\Hosting\Deployment\TaskCli;
 	"hosting:hook:build",
 	description: "Runs the hooks for 'after the build finished'",
 )]
-final class BuildHooksCommand extends Command
+final readonly class BuildHooksCommand
 {
 	/**
 	 */
 	public function __construct (
-		private readonly HookRunners $runners,
-	)
-	{
-		parent::__construct();
-	}
+		private HookRunners $runners,
+	) {}
 
 	/**
 	 */
-	#[\Override]
-	protected function execute (InputInterface $input, OutputInterface $output) : int
+	public function __invoke (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);
 		$io->title("Run Build Hooks");
@@ -37,6 +33,6 @@ final class BuildHooksCommand extends Command
 		$io->newLine();
 		$io->success("Ran all build hooks.");
 
-		return 0;
+		return Command::SUCCESS;
 	}
 }

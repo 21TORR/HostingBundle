@@ -9,30 +9,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Torr\Cli\Console\Style\TorrStyle;
 use Torr\Hosting\BuildInfo\BuildInfoStorage;
 
-#[AsCommand("hosting:build:info")]
-final class ShowBuildInfoCommand extends Command
+#[AsCommand(
+	"hosting:build:info",
+	description: "Shows the current build info",
+)]
+final readonly class ShowBuildInfoCommand
 {
 	/**
 	 */
 	public function __construct (
-		private readonly BuildInfoStorage $buildInfoStorage,
-	)
-	{
-		parent::__construct();
-	}
+		private BuildInfoStorage $buildInfoStorage,
+	) {}
 
 	/**
 	 */
-	#[\Override]
-	protected function configure () : void
-	{
-		$this->setDescription("Shows the current build info");
-	}
-
-	/**
-	 */
-	#[\Override]
-	protected function execute (InputInterface $input, OutputInterface $output) : int
+	public function __invoke (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TorrStyle($input, $output);
 		$io->title("Hosting: Build Info");
@@ -50,7 +41,7 @@ final class ShowBuildInfoCommand extends Command
 
 		$io->table(["Key", "Value"], $rows);
 
-		return self::SUCCESS;
+		return Command::SUCCESS;
 	}
 
 	/**

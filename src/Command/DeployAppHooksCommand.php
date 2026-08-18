@@ -13,21 +13,17 @@ use Torr\Hosting\Deployment\TaskCli;
 	"hosting:hook:deploy-app",
 	description: "Runs the hooks for deploying a complete application.",
 )]
-final class DeployAppHooksCommand extends Command
+final readonly class DeployAppHooksCommand
 {
 	/**
 	 */
 	public function __construct (
-		private readonly HookRunners $runners,
-	)
-	{
-		parent::__construct();
-	}
+		private HookRunners $runners,
+	) {}
 
 	/**
 	 */
-	#[\Override]
-	protected function execute (InputInterface $input, OutputInterface $output) : int
+	public function __invoke (InputInterface $input, OutputInterface $output) : int
 	{
 		$io = new TaskCli($input, $output);
 		$io->title("Run Deploy App Hooks");
@@ -37,6 +33,6 @@ final class DeployAppHooksCommand extends Command
 		$io->newLine();
 		$io->success("Ran all deploy app hooks.");
 
-		return 0;
+		return Command::SUCCESS;
 	}
 }
