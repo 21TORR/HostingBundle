@@ -20,7 +20,7 @@ class GitVersionFetcher
 	) {}
 
 	/**
-	 * @return array{commit:string, last-tag:string|null}|null
+	 * @return array{commit:string, last-tag:string|null, tree-id:string|null}|null
 	 */
 	public function detectVersion () : ?array
 	{
@@ -34,10 +34,11 @@ class GitVersionFetcher
 
 		$commit = $this->run([$git, "rev-parse", "HEAD"]);
 		$tag = $this->run([$git, "describe", "--abbrev=0"]);
+		$treeId = $this->run([$git, "rev-parse", "HEAD^{tree}"]);
 
 		if (!\is_string($commit))
 		{
-			$this->logger->error("Could not fetch current installed version: no current commit.");
+			$this->logger->debug("Could not fetch current installed version: no current commit.");
 
 			return null;
 		}
@@ -45,6 +46,7 @@ class GitVersionFetcher
 		return [
 			"commit" => $commit,
 			"last-tag" => $tag,
+			"tree-id" => $treeId,
 		];
 	}
 

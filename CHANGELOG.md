@@ -1,3 +1,11 @@
+4.4.0
+=====
+
+* (feature) Add the tree id of the sources to the build info, as `git.tree-id`.
+* (feature) Fall back to the `PLATFORM_TREE_ID` of an Upsun build, if there is no git repository to read the version from.
+* (improvement) A missing git repository is logged as debug instead of error now, as it is an expected case with the Upsun fallback.
+
+
 4.3.0
 =====
 
