@@ -41,7 +41,10 @@ final readonly class DeployContainerHooksCommand
 			trigger_deprecation("21torr/hosting", "4.2.1", "Always call this command with `hosting:hook:deploy-container`, all other names are deprecated");
 		}
 
-		$this->runners->runDeployContainerHooks($io);
+		if (!$this->runners->runDeployContainerHooks($io))
+		{
+			return Command::FAILURE;
+		}
 
 		$io->newLine();
 		$io->success("Ran all deploy container hooks.");

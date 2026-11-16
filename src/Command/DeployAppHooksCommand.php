@@ -28,7 +28,10 @@ final readonly class DeployAppHooksCommand
 		$io = new TaskCli($input, $output);
 		$io->title("Run Deploy App Hooks");
 
-		$this->runners->runDeployAppHooks($io);
+		if (!$this->runners->runDeployAppHooks($io))
+		{
+			return Command::FAILURE;
+		}
 
 		$io->newLine();
 		$io->success("Ran all deploy app hooks.");

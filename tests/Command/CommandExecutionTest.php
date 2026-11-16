@@ -15,6 +15,10 @@ use Torr\Hosting\Command\DeployAppHooksCommand;
 use Torr\Hosting\Command\DeployContainerHooksCommand;
 use Torr\Hosting\Command\ShowBuildInfoCommand;
 use Torr\Hosting\Command\ValidateAppCommand;
+use Torr\Hosting\Deployment\BuildHookInterface;
+use Torr\Hosting\Deployment\DeployAppHookInterface;
+use Torr\Hosting\Deployment\DeployContainerHookInterface;
+use Torr\Hosting\Deployment\Exception\HookFailedException;
 use Torr\Hosting\Deployment\HookRunners;
 use Torr\Hosting\Event\ValidateAppEvent;
 
@@ -30,7 +34,7 @@ final class CommandExecutionTest extends TestCase
 	 */
 	public function testBuildHooksCommand () : void
 	{
-		$tester = $this->createTester(new BuildHooksCommand(new HookRunners([], [], [])));
+		$tester = $this->createTester(new BuildHooksCommand(new HookRunners([], [], [], new NullLogger())));
 
 		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:build"]));
 		self::assertStringContainsString("Ran all build hooks.", $tester->getDisplay());
@@ -40,7 +44,7 @@ final class CommandExecutionTest extends TestCase
 	 */
 	public function testDeployAppHooksCommand () : void
 	{
-		$tester = $this->createTester(new DeployAppHooksCommand(new HookRunners([], [], [])));
+		$tester = $this->createTester(new DeployAppHooksCommand(new HookRunners([], [], [], new NullLogger())));
 
 		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:deploy-app"]));
 		self::assertStringContainsString("Ran all deploy app hooks.", $tester->getDisplay());
@@ -50,7 +54,7 @@ final class CommandExecutionTest extends TestCase
 	 */
 	public function testDeployContainerHooksCommand () : void
 	{
-		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [])));
+		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [], new NullLogger())));
 
 		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:deploy-container"]));
 
@@ -69,7 +73,7 @@ final class CommandExecutionTest extends TestCase
 	{
 		$this->expectUserDeprecationMessage("Since 21torr/hosting 4.2.1: Always call this command with `hosting:hook:deploy-container`, all other names are deprecated");
 
-		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [])));
+		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [], new NullLogger())));
 
 		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:deploy"]));
 		self::assertStringContainsString("Ran all deploy container hooks.", $tester->getDisplay());
@@ -80,13 +84,67 @@ final class CommandExecutionTest extends TestCase
 	 */
 	public function testDeployContainerHooksCommandDoesNotWarnAboutAbbreviations () : void
 	{
-		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [])));
+		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [], [], new NullLogger())));
 
 		self::assertSame(Command::SUCCESS, $tester->run(["command" => "hosting:hook:deploy-cont"]));
 
 		$display = $tester->getDisplay();
 		self::assertStringContainsString("Ran all deploy container hooks.", $display);
 		self::assertStringNotContainsString("other names are deprecated", $display);
+	}
+
+	/**
+	 * A failing hook must be reported and must lead to an error exit code.
+	 */
+	public function testBuildHooksCommandFailsForFailingHooks () : void
+	{
+		$hook = self::createStub(BuildHookInterface::class);
+		$hook->method("getLabel")->willReturn("failing hook");
+		$hook->method("runPostBuild")->willThrowException(new HookFailedException("build exploded"));
+
+		$tester = $this->createTester(new BuildHooksCommand(new HookRunners([$hook], [], [], new NullLogger())));
+
+		self::assertSame(Command::FAILURE, $tester->run(["command" => "hosting:hook:build"]));
+
+		$display = $tester->getDisplay();
+		self::assertStringContainsString("build exploded", $display);
+		self::assertStringNotContainsString("Ran all build hooks.", $display);
+	}
+
+	/**
+	 * A failing hook must be reported and must lead to an error exit code.
+	 */
+	public function testDeployAppHooksCommandFailsForFailingHooks () : void
+	{
+		$hook = self::createStub(DeployAppHookInterface::class);
+		$hook->method("getLabel")->willReturn("failing hook");
+		$hook->method("runDeployApp")->willThrowException(new HookFailedException("app exploded"));
+
+		$tester = $this->createTester(new DeployAppHooksCommand(new HookRunners([], [], [$hook], new NullLogger())));
+
+		self::assertSame(Command::FAILURE, $tester->run(["command" => "hosting:hook:deploy-app"]));
+
+		$display = $tester->getDisplay();
+		self::assertStringContainsString("app exploded", $display);
+		self::assertStringNotContainsString("Ran all deploy app hooks.", $display);
+	}
+
+	/**
+	 * A failing hook must be reported and must lead to an error exit code.
+	 */
+	public function testDeployContainerHooksCommandFailsForFailingHooks () : void
+	{
+		$hook = self::createStub(DeployContainerHookInterface::class);
+		$hook->method("getLabel")->willReturn("failing hook");
+		$hook->method("runDeployContainer")->willThrowException(new HookFailedException("container exploded"));
+
+		$tester = $this->createTester(new DeployContainerHooksCommand(new HookRunners([], [$hook], [], new NullLogger())));
+
+		self::assertSame(Command::FAILURE, $tester->run(["command" => "hosting:hook:deploy-container"]));
+
+		$display = $tester->getDisplay();
+		self::assertStringContainsString("container exploded", $display);
+		self::assertStringNotContainsString("Ran all deploy container hooks.", $display);
 	}
 
 	/**
