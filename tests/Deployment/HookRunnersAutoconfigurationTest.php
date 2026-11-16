@@ -3,6 +3,8 @@
 namespace Tests\Torr\Hosting\Deployment;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\Torr\Hosting\Deployment\Fixtures\FixtureBuildHook;
 use Tests\Torr\Hosting\Deployment\Fixtures\FixtureDeployAppHook;
@@ -62,6 +64,8 @@ final class HookRunnersAutoconfigurationTest extends TestCase
 				->setAutoconfigured(true)
 				->setPublic(true);
 		}
+
+		$container->register(LoggerInterface::class, NullLogger::class);
 
 		$container->register(HookRunners::class)
 			->setAutowired(true)

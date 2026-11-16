@@ -28,7 +28,10 @@ final readonly class BuildHooksCommand
 		$io = new TaskCli($input, $output);
 		$io->title("Run Build Hooks");
 
-		$this->runners->runBuildHooks($io);
+		if (!$this->runners->runBuildHooks($io))
+		{
+			return Command::FAILURE;
+		}
 
 		$io->newLine();
 		$io->success("Ran all build hooks.");

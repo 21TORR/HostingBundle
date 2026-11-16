@@ -10,6 +10,7 @@ services:
         exclude:
             - ../src/BuildInfo/BuildInfo.php
             - ../src/DependencyInjection
+            - ../src/Deployment/Exception
             - ../src/Event
             - ../src/Exception
             - ../src/HostingBundle.php

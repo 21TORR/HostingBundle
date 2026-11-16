@@ -3,6 +3,7 @@
 namespace Torr\Hosting\Deployment;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+use Torr\Hosting\Deployment\Exception\HookFailedException;
 
 /**
  * @deprecated Migrate to {@see DeployContainerHookInterface}
@@ -17,6 +18,8 @@ interface DeployHookInterface
 
 	/**
 	 * Runs the post (container) deployment hook
+	 *
+	 * @throws HookFailedException if the hook failed
 	 */
 	public function runPostDeployment (TaskCli $io) : void;
 }

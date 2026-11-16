@@ -1,3 +1,10 @@
+4.5.0
+=====
+
+* (feature) Add `HookFailedException`, that hooks can throw to signal that they failed.
+* (feature) A failed hook is printed, logged as error and the command exits with an error code. The remaining hooks are not run.
+
+
 4.4.0
 =====
 
